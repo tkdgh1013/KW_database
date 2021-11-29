@@ -3,7 +3,7 @@ import { init } from './config/db.js';
 import cors from 'cors';
 import testUser from './api/user/testuser.js';
 import login from './api/User/login.js';
-
+import join from './api/User/join.js';
 
 const conn = init();
 
@@ -23,6 +23,7 @@ app.use(
 const router = express.Router();
 testUser(app,conn);
 login(app,conn);
+join(app,conn);
 app.set('port', process.env.PORT || 4000);
 
 app.listen(app.get('port'), () => {
