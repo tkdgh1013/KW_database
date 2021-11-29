@@ -32,7 +32,6 @@ const TitleWrap = styled.div`
 `
 
 const LeftInput = styled.span`
-    position:relative;
     width:100px;
     height:50px;
     margin-right:20px;
@@ -40,7 +39,6 @@ const LeftInput = styled.span`
 `
 
 const RightInput = styled.span`
-    position:relative;
     width:100px;
     height:50px;
     margin-right:20px;
@@ -54,6 +52,23 @@ const innerBody = styled.div`
 const ContainerA = styled.div`
     margin-bottom:60px;
 `
+
+const Btn = ({text}) =>{
+    return (
+    <Link to={'/page2'}>
+        <button
+        style={{
+            backgroundColor: "skyblue",
+            color : "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: "10px",
+            fontSize: 16,
+            marginLeft: "40px"
+        }}>{text}</button>
+    </Link>
+    );
+}
 
 const Page1= ({history})=>{
     const [name,setName] = useState("");
@@ -75,7 +90,7 @@ const Page1= ({history})=>{
             <div style={{margin:'20px'}}>
                 <LeftInput>이름 :</LeftInput>
                 <RightInput>
-                    <input style={{width:'100px',height:'20px fixed'}}
+                    <input style={{width:'100px',height:'27px'}}
                     value={name}
                     onChange={onChange1}/>
                 </RightInput>
@@ -83,7 +98,7 @@ const Page1= ({history})=>{
             <div style={{margin:'20px'}}>
                 <LeftInput>주민번호 :</LeftInput>
                 <RightInput>
-                    <input style={{width:'100px',height:'20px'}}
+                    <input style={{width:'150px',height:'27px'}}
                     value={RRN}
                     onChange={onChange2}/>
                 </RightInput>
@@ -91,13 +106,14 @@ const Page1= ({history})=>{
             <div style={{margin:'20px'}}>
                 <LeftInput>연락처 :</LeftInput>
                 <RightInput>
-                    <input style={{width:'100px',height:'20px'}}
+                    <input style={{width:'130px',height:'27px'}}
                     value={pn}
                     onChange={onChange3}/>
                 </RightInput>
             </div>   
         </ContainerA>
-        
+        <Btn text="로그인하기" />
+        <Btn text="회원가입" />
         </Wrap>
     </Body>
     );
