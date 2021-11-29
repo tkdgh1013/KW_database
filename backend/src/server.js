@@ -6,6 +6,7 @@ import login from './api/User/login.js';
 import join from './api/User/join.js';
 import list from './api/User/hospital/list.js';
 import vaccine_info from './api/User/vaccine_info.js';
+import hinfo from './api/User/hospital/hinfo.js';
 
 
 const conn = init();
@@ -28,6 +29,7 @@ testUser(app,conn);
 login(app,conn);
 join(app,conn);
 list(app,conn);
+hinfo(app,conn);
 vaccine_info(app,conn);
 app.set('port', process.env.PORT || 4000);
 
