@@ -5,25 +5,100 @@ import { Link } from 'react-router-dom';
 
 const Body = styled.div`
     display:flex;
+    justify-content:center;
+    align-items:center;
     flex-direction:column;
-    font-size:30px;
-    color:black;
+    font-size:25px;
+    height:500px;  
+`
+
+const Wrap = styled.div`
+    
 `
 
 const Title = styled.div`
     display:flex;
-    margin:10px 20px;
     text-align:center;
-    color:black;
+`
+
+const TitleWrap = styled.div`
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:400px;
+    height:80px;
+    background-color:#A6A6A6;
+    border-radius: 10px;
+`
+
+const LeftInput = styled.span`
+    position:relative;
+    width:100px;
+    height:50px;
+    margin-right:20px;
+    text-align:center;
+`
+
+const RightInput = styled.span`
+    position:relative;
+    width:100px;
+    height:50px;
+    margin-right:20px;
+    text-align:center;
+`
+
+const innerBody = styled.div`
+    margin:10px;
+`
+
+const ContainerA = styled.div`
+    margin-bottom:60px;
 `
 
 const Page1= ({history})=>{
-    console.log("this is page1");
-    return (
-    <Body>
-        <Title>백신 접종 예약 시스템</Title>
-        Page1
-        <Link to={'/page2'}>Go to Page 2</Link>
+    const [name,setName] = useState("");
+    const [RRN,setRRN] = useState("");
+    const [pn,setPn] = useState("");
+    const onChange1 = (event) => {
+        setName(event.target.value);
+    }
+    const onChange2 = (event) => {
+        setRRN(event.target.value);
+    }
+    const onChange3 = (event) => {
+        setPn(event.target.value);
+    }
+     return (
+    <Body><Wrap>
+        <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
+        <ContainerA>
+            <div style={{margin:'20px'}}>
+                <LeftInput>이름 :</LeftInput>
+                <RightInput>
+                    <input style={{width:'100px',height:'20px fixed'}}
+                    value={name}
+                    onChange={onChange1}/>
+                </RightInput>
+            </div>
+            <div style={{margin:'20px'}}>
+                <LeftInput>주민번호 :</LeftInput>
+                <RightInput>
+                    <input style={{width:'100px',height:'20px'}}
+                    value={RRN}
+                    onChange={onChange2}/>
+                </RightInput>
+            </div>
+            <div style={{margin:'20px'}}>
+                <LeftInput>연락처 :</LeftInput>
+                <RightInput>
+                    <input style={{width:'100px',height:'20px'}}
+                    value={pn}
+                    onChange={onChange3}/>
+                </RightInput>
+            </div>   
+        </ContainerA>
+        
+        </Wrap>
     </Body>
     );
 };
