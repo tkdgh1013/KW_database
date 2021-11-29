@@ -19,7 +19,6 @@ export default (app, conn) =>{
         conn.query(query,
         [date,address],
         (err,result)=>{
-            console.log(result);
             if(err || result.length===0){
                 res.send({result:false});
                 return;
