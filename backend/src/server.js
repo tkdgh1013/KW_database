@@ -1,7 +1,7 @@
 import express from 'express';
 import { init } from './config/db.js';
 import cors from 'cors';
-import testUser from '/users/tkdgh/desktop/db_project/kw_database/backend/src/api/user/testuser.js';
+import testUser from './api/user/testuser.js';
 import login from './api/User/login.js';
 
 
