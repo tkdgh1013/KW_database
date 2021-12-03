@@ -86,6 +86,7 @@ const Page1= ({history})=>{
                 <LeftInput>이름 :</LeftInput>
                 <RightInput>
                     <input style={{width:'100px',height:'27px'}}
+                    placeholder="홍길동"
                     value={name}
                     onChange={onChange1}/>
                 </RightInput>
@@ -94,6 +95,7 @@ const Page1= ({history})=>{
                 <LeftInput>주민번호 :</LeftInput>
                 <RightInput>
                     <input style={{width:'150px',height:'27px'}}
+                    placeholder="000000-0000000"
                     value={RRN}
                     onChange={onChange2}/>
                 </RightInput>
@@ -102,6 +104,7 @@ const Page1= ({history})=>{
                 <LeftInput>연락처 :</LeftInput>
                 <RightInput>
                     <input style={{width:'130px',height:'27px'}}
+                    placeholder="000-0000-0000"
                     value={pn}
                     onChange={onChange3}/>
                 </RightInput>
