@@ -57,9 +57,17 @@ const Btn = styled.button`
     border-radius: 10px;
     font-size: 16;
     margin-left: 40px;
+    cursor: pointer;
 `
 const loginHandler = ({name, RRN, pn}) => {
-    axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>console.log(data));
+    axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
+        if(data.result===true){
+            document.location.href = '/page2'
+        }
+        else{
+                alert("입력하신 이름과 주민번호, 연락처가 일치하지 않습니다.");
+        }
+    });
     
 }
 
