@@ -9,6 +9,7 @@ import vaccine_info from './api/User/vaccine_info.js';
 import hinfo from './api/User/hospital/hinfo.js';
 import Hsearch from './api/User/hospital/Hsearch.js';
 import count from './api/User/count.js';
+import addRes from './api/User/addRes.js';
 
 const conn = init();
 
@@ -34,6 +35,7 @@ hinfo(app,conn);
 vaccine_info(app,conn);
 Hsearch(app,conn);
 count(app,conn);
+addRes(app,conn);
 app.set('port', process.env.PORT || 4000);
 
 app.listen(app.get('port'), () => {
