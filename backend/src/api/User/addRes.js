@@ -3,7 +3,7 @@ export default (app, conn) =>{
         const {DateId,Hour,RRN,vaccine,VaccineNum} = req.query;
         console.log(DateId,Hour,RRN,vaccine,VaccineNum);
         
-        var sql="INSERT INTO reservationinfo(DateId,Hour,RRN,vaccine,VaccineNum) VALUES(?,?, '981013-1000001', 'Pfizer',2)"
+        var sql="INSERT INTO reservationinfo(DateId,Hour,RRN,vaccine,VaccineNum) VALUES(?,?,?,?,?)"
 
         conn.query(sql,
         [DateId,Hour,RRN,vaccine,VaccineNum],
