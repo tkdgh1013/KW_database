@@ -49,25 +49,18 @@ const innerBody = styled.div`
     margin:10px;
 `
 
-const ContainerA = styled.div`
-    margin-bottom:60px;
+const Btn = styled.button`
+    background-color: skyblue;
+    color : white;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 16;
+    margin-left: 40px;
 `
-
-const Btn = ({text}) =>{
-    return (
-    <Link to={'/page2'}>
-        <button
-        style={{
-            backgroundColor: "skyblue",
-            color : "white",
-            padding: "10px 20px",
-            border: 0,
-            borderRadius: "10px",
-            fontSize: 16,
-            marginLeft: "40px"
-        }}>{text}</button>
-    </Link>
-    );
+const loginHandler = ({name, RRN, pn}) => {
+    axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>console.log(data));
+    
 }
 
 const Page1= ({history})=>{
@@ -83,10 +76,12 @@ const Page1= ({history})=>{
     const onChange3 = (event) => {
         setPn(event.target.value);
     }
+    console.log(name,RRN,pn);
      return (
     <Body><Wrap>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
-        <ContainerA>
+        <div
+            style={{marginBottom:"60px"}}>
             <div style={{margin:'20px'}}>
                 <LeftInput>이름 :</LeftInput>
                 <RightInput>
@@ -111,9 +106,9 @@ const Page1= ({history})=>{
                     onChange={onChange3}/>
                 </RightInput>
             </div>   
-        </ContainerA>
-        <Btn text="로그인하기" />
-        <Btn text="회원가입" />
+        <Btn onClick = {()=>loginHandler({name,RRN,pn})}>로그인하기</Btn>
+        <Btn onClick = {()=>{}}>회원가입하기</Btn>
+        </div>
         </Wrap>
     </Body>
     );
