@@ -7,7 +7,8 @@ import join from './api/User/join.js';
 import list from './api/User/hospital/list.js';
 import vaccine_info from './api/User/vaccine_info.js';
 import hinfo from './api/User/hospital/hinfo.js';
-
+import Hsearch from './api/User/hospital/Hsearch.js';
+import count from './api/User/count.js';
 
 const conn = init();
 
@@ -31,6 +32,8 @@ join(app,conn);
 list(app,conn);
 hinfo(app,conn);
 vaccine_info(app,conn);
+Hsearch(app,conn);
+count(app,conn);
 app.set('port', process.env.PORT || 4000);
 
 app.listen(app.get('port'), () => {
