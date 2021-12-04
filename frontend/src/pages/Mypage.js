@@ -80,16 +80,23 @@ const Mypage= ({history})=>{
 
     
     useEffect(async()=>{
-        axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}}).then(({data})=>{
-        
-        if(data.result!==false)
-            console.log(data)
-        
-            
-            
-        });
+        const res = axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}})
+        const _inputData=await res.data.map((rowData)=>(
+            setLastIdx(lastIdx+1),{
+                uName: rowData.name,
+                hName: rowData.hospitalName,
+                hContact: rowData.contact,
+                hAddr1:rowData.address1,
+                hAddr2:rowData.address2,
+                oHour:rowData.Hour,
+                dDate:rowData.Date,
+                rVacc:rowData.vaccine
+            })
+        )
+        setInputData(inputData(_inputData))
+        console.log(inputData)
     },[])
-    
+    //console.log(inputData)
 
      return (
     <Body><Wrap>
