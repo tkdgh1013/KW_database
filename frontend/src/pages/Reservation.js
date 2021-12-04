@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
 
 const Body = styled.div`
     display:flex;
@@ -95,8 +95,18 @@ const loginHandler = ({name, RRN, pn}) => {
     
 }
 
+function getFormatDate(date){
+    var year = date.getFullYear();
+    var month = (1+date.getMonth());
+    month = month >= 10? month: '0' + month;
+    var day = date.getDate();
+    day = day>= 10? day : '0' + day;
+    return year + '-' + month + '-' + day;
+}
+
 const Reservation= ({history})=>{
     const [date,setDate] = useState(new Date());
+    const [formatted_date,setFdate] = useState("");
     const [si,setSi] = useState("");
     const [gu,setGu] = useState("");
     const [dong,setDong] = useState("");
@@ -106,8 +116,13 @@ const Reservation= ({history})=>{
           {value}
         </Btn>
       );
-    console.log({date});
- /*   const onChange1 = (event) => {
+
+    useEffect(()=>{
+        setFdate(getFormatDate(date));
+    },[date]);
+
+
+ /* const onChange1 = (event) => {
         setName(event.target.value);
     }
     const onChange2 = (event) => {
@@ -116,18 +131,14 @@ const Reservation= ({history})=>{
     const onChange3 = (event) => {
         setPn(event.target.value);
     }*/
-     return (
+    return (
     <Body><Wrap>
         <TitleWrap><Title>의료기관 찾기</Title> </TitleWrap>
         <ContainerA>
         <DatePicker
         selected={date}
-        onChange={date => {
-            
-            var newDate = new Date(date);
-            format(newDate,"yyyy-MM-dd")
-            console.log({newDate});
-            setDate(newDate)}
+        onChange={date => {  
+            setDate(date);}
         }
         customInput={<ExampleCustomInput />}
         />
@@ -138,16 +149,5 @@ const Reservation= ({history})=>{
     </Wrap></Body>
     );
 };
-/*
-const Btn = styled.button`
-    background-color: skyblue;
-    color : white;
-    padding: 10px 20px;
-    border: 0;
-    border-radius: 10px;
-    font-size: 16;
-    margin-left: 40px;
-    cursor: pointer;
-`*/
 
 export default Reservation;
