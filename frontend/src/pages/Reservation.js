@@ -9,7 +9,7 @@ const Body = styled.div`
     align-items:center;
     flex-direction:column;
     font-size:25px;
-    height:500px;  
+    height:800px;  
 `
 
 const Wrap = styled.div`
@@ -19,6 +19,7 @@ const Wrap = styled.div`
 const Title = styled.div`
     display:flex;
     text-align:center;
+    color : white;
 `
 
 const TitleWrap = styled.div`
@@ -26,7 +27,27 @@ const TitleWrap = styled.div`
     justify-content:center;
     align-items:center;
     width:400px;
+    height:60px;
+    background-color:#A6A6A6;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left:100px;
+`
+const ContainerA = styled.div`
+    display:flex;
+    justify-content:center;
+    width:600px;
     height:80px;
+    background-color:#A6A6A6;
+    border-radius: 10px;
+    margin-bottom: 20px;
+`
+
+const ContainerB = styled.div`
+    display:flex;
+    justify-content:center;
+    width:600px;
+    height:400px;
     background-color:#A6A6A6;
     border-radius: 10px;
 `
@@ -87,13 +108,9 @@ const Reservation= ({history})=>{
     console.log(name,RRN,pn);
      return (
     <Body><Wrap>
-        <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
-        <div
-            style={{marginBottom:"60px"}}>
-               
-        <Btn onClick = {()=>loginHandler({name,RRN,pn})}>로그인하기</Btn>
-        <Btn onClick = {()=>{document.location.href = '/signup'}}>회원가입하기</Btn>
-        </div>
+        <TitleWrap><Title>의료기관 찾기</Title> </TitleWrap>
+        <ContainerA></ContainerA>
+        <ContainerB></ContainerB>
         </Wrap>
     </Body>
     );
