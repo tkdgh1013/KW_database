@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo} from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Select from "react-select"
 const Body = styled.div`
     display:flex;
     justify-content:center;
@@ -92,11 +95,43 @@ const loginHandler = ({name, RRN, pn}) => {
     
 }
 
+function getFormatDate(date){
+    var year = date.getFullYear();
+    var month = (1+date.getMonth());
+    month = month >= 10? month: '0' + month;
+    var day = date.getDate();
+    day = day>= 10? day : '0' + day;
+    return year + '-' + month + '-' + day;
+}
+
 const Reservation= ({history})=>{
-    const [name,setName] = useState("");
-    const [RRN,setRRN] = useState("");
-    const [pn,setPn] = useState("");
-    const onChange1 = (event) => {
+    const [date,setDate] = useState(new Date());
+    const [formatted_date,setFdate] = useState("");
+    const [si,setSi] = useState("");
+    const [gu,setGu] = useState("");
+    const [dong,setDong] = useState("");
+    
+    const ExampleCustomInput = ({ value, onClick }) => (
+        <Btn onClick={onClick}>
+          {value}
+        </Btn>
+      );
+
+    useEffect(()=>{
+        setFdate(getFormatDate(date));
+    },[date]);
+    
+    const options = useMemo(
+        () => [
+          { value: "pFizer", label: "화이자" },
+          { value: "Moderna", label: "모더나"},
+          { value: "AstraZeneca", label: "아스트라제네카"},
+          { value: "Janssen", label: "얀센" },
+        ],
+        []
+      );
+
+ /* const onChange1 = (event) => {
         setName(event.target.value);
     }
     const onChange2 = (event) => {
@@ -104,17 +139,27 @@ const Reservation= ({history})=>{
     }
     const onChange3 = (event) => {
         setPn(event.target.value);
-    }
-    console.log(name,RRN,pn);
-     return (
+    }*/
+    return (
     <Body><Wrap>
         <TitleWrap><Title>의료기관 찾기</Title> </TitleWrap>
-        <ContainerA></ContainerA>
-        <ContainerB></ContainerB>
-        </Wrap>
-    </Body>
+        <ContainerA>
+        <DatePicker
+        selected={date}
+        onChange={date => {  
+            setDate(date);}
+        }
+        customInput={<ExampleCustomInput />}
+        />
+        <Select 
+        defaultValue={{value:"Pfizer",label:"화이자"}}
+        options={options}/>
+        </ContainerA>
+        <ContainerB>
+            히힝
+        </ContainerB>
+    </Wrap></Body>
     );
 };
-
 
 export default Reservation;
