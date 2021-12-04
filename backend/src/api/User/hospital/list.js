@@ -15,7 +15,7 @@ export default (app, conn) =>{
             query=queries[2];
         else
             query=queries[3];
-         
+          
         conn.query(query,
         [date,address1,address2,address3],
         (err,result)=>{
