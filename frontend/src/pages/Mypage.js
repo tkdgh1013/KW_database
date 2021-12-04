@@ -31,22 +31,10 @@ const TitleWrap = styled.div`
     border-radius: 10px;
 `
 
-const LeftInput = styled.span`
-    width:100px;
-    height:50px;
-    margin-right:20px;
+const box = styled.div`
+    width:600px;
+    height:400px;
     text-align:center;
-`
-
-const RightInput = styled.span`
-    width:100px;
-    height:50px;
-    margin-right:20px;
-    text-align:center;
-`
-
-const innerBody = styled.div`
-    margin:10px;
 `
 
 const Btn = styled.button`
@@ -65,8 +53,18 @@ const Btn = styled.button`
 const Mypage= ({history})=>{
     
     const RRN = window.sessionStorage.getItem('RRN');
-    
-    const [inputData,setInputData]=useState({
+    let count=0;
+    const [info1,setInfo1]=useState({
+        hospitalName:'',
+        contact:'',
+        addr1:'',
+        addr2:'',
+        hour:'',
+        date:'',
+        vacc:'',
+        name:''
+    })
+    const [info2,setInfo2]=useState({
         hospitalName:'',
         contact:'',
         addr1:'',
@@ -81,38 +79,71 @@ const Mypage= ({history})=>{
     useEffect(async()=>{
         const res = axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}}).then(({data})=>{
         
-        if(data.result!==false){
-            console.log(data);
-            setInputData(
-                inputData.hospitalName=data[0].hospitalName,
-                inputData.contact=data[0].contact,
-                inputData.addr1=data[0].address1,
-                inputData.addr2=data[0].address2,
-                inputData.hour=data[0].Hour,
-                inputData.date=data[0].Date,
-                inputData.vacc=data[0].vaccine,
-                inputData.name=data[0].name
+        if(data[0]!==undefined){
+            setInfo1(
+                info1.hospitalName=data[0].hospitalName,
+                info1.contact=data[0].contact,
+                info1.addr1=data[0].address1,
+                info1.addr2=data[0].address2,
+                info1.hour=data[0].Hour,
+                info1.date=data[0].Date,
+                info1.vacc=data[0].vaccine,
+                info1.name=data[0].name
             )
+            count=1;
+            if(data[1]!==undefined){
+                setInfo2(
+                    info2.hospitalName=data[1].hospitalName,
+                    info2.contact=data[1].contact,
+                    info2.addr1=data[1].address1,
+                    info2.addr2=data[1].address2,
+                    info2.hour=data[1].Hour,
+                    info2.date=data[1].Date,
+                    info2.vacc=data[1].vaccine,
+                    info2.name=data[1].name
+                )
+                count=2;
+            }
         }
-        console.log(inputData);    
-        
-            
-            
+        console.log(info1);    
+        console.log(info2);    
         });
-        console.log(res.data);
+        
     },[])
     
-
-     return (
+    if(count===0){
+    return (
     <Body><Wrap>
         <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>
         
         <div
-            style={{marginBottom:"60px"}}>{inputData.name}
+            style={{marginBottom:"60px"}}>
         </div>
         </Wrap>
     </Body>
-    );
+    );}
+    if(count===1){
+        return (
+        <Body><Wrap>
+            <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>
+            
+            <div
+                style={{marginBottom:"60px"}}>
+            </div>
+            </Wrap>
+        </Body>
+    );}
+    if(count===2){
+        return (
+        <Body><Wrap>
+            <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>
+            
+            <div
+                style={{marginBottom:"60px"}}>
+            </div>
+            </Wrap>
+        </Body>
+    );}
 };
 
 
