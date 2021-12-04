@@ -10,7 +10,6 @@ export default (app, conn) =>{
         var sql2="UPDATE officehour set `reservation limit`=`reservation limit`-1 WHERE DateId=? and Hour=?  and exists(SELECT *FROM user WHERE RRN=? and isVaccinated<2);";
 
 
-
         var sql3; 
         if(vaccine==="Pfizer")
             sql3="UPDATE vaccineinfo set Pfizer=Pfizer-1 WHERE DateId=? and exists( SELECT * FROM user WHERE RRN=? and isVaccinated<2);";
