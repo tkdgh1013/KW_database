@@ -3,17 +3,36 @@ export default (app, conn) =>{
         const {DateId,Hour,RRN,vaccine,VaccineNum} = req.query;
         console.log(DateId,Hour,RRN,vaccine,VaccineNum);
         
-        var sql="INSERT INTO reservationinfo(DateId,Hour,RRN,vaccine,VaccineNum) VALUES(?,?,?,?,?)"
 
-        conn.query(sql,
-        [DateId,Hour,RRN,vaccine,VaccineNum],
-        (err,result)=>{
+        var sql1="INSERT INTO reservationinfo(DateId,Hour,RRN,vaccine,VaccineNum) select ?,?,U.RRN,?,U.isVaccinated+1 from user as U where U.RRN=? and U.isVaccinated<2;";
+
+    
+        var sql2="UPDATE officehour set `reservation limit`=`reservation limit`-1 WHERE DateId=? and Hour=?  and exists(SELECT *FROM user WHERE RRN=? and isVaccinated<2);";
+
+
+
+        var sql3; 
+        if(vaccine==="Pfizer")
+            sql3="UPDATE vaccineinfo set Pfizer=Pfizer-1 WHERE DateId=? and exists( SELECT * FROM user WHERE RRN=? and isVaccinated<2);";
+        else if(vaccine==="Moderna")
+            sql3="UPDATE vaccineinfo set Moderna=Moderna-1 WHERE DateId=? and exists( SELECT * FROM user WHERE RRN=? and isVaccinated<2);";
+        else if(vaccine==="AstraZeneca")
+            sql3="UPDATE vaccineinfo set AstraZeneca=AstraZeneca-1 WHERE DateId=? and exists( SELECT * FROM user WHERE RRN=? and isVaccinated<2);";
+        else
+            sql3="UPDATE vaccineinfo set Janssen=Janssen-1 WHERE DateId=? and exists( SELECT * FROM user WHERE RRN=? and isVaccinated<2);";
+
+        var sql4="UPDATE user set isVaccinated=isVaccinated+1  WHERE RRN=? and isVaccinated<2;";
+
+
+        conn.query(sql1+sql2+sql3+sql4,
+        [DateId,Hour,vaccine,RRN,DateId,Hour,RRN,DateId,RRN,RRN],
+        (err,results,field)=>{
             if(err){
-                res.send({result:false});
+                res.send({results:false});
                 return;
             }
             else{
-                return res.send({result:true});                 
+                return res.send({results:true});                 
             }
         })
     });
