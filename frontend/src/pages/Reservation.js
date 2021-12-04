@@ -1,11 +1,12 @@
-import React, { useState, useMemo} from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { useMemo } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select"
+
 const Body = styled.div`
     display:flex;
     justify-content:center;
@@ -38,9 +39,10 @@ const TitleWrap = styled.div`
 `
 const ContainerA = styled.div`
     display:flex;
+    flex-direction:column;
     justify-content:center;
     width:600px;
-    height:80px;
+    height:120px;
     background-color:#A6A6A6;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -55,34 +57,25 @@ const ContainerB = styled.div`
     border-radius: 10px;
 `
 
-const LeftInput = styled.span`
-    width:100px;
-    height:50px;
-    margin-right:20px;
-    text-align:center;
-`
-
-const RightInput = styled.span`
-    width:100px;
-    height:50px;
-    margin-right:20px;
-    text-align:center;
-`
-
 const innerBody = styled.div`
     margin:10px;
 `
 
 const Btn = styled.button`
-    background-color: skyblue;
-    color : white;
+    background-color: white;
     padding: 10px 20px;
     border: 0;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 16;
-    margin-left: 40px;
     cursor: pointer;
 `
+const searchRow = styled.div`
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+`
+
+
 const loginHandler = ({name, RRN, pn}) => {
     axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
         if(data.result===true){
@@ -115,7 +108,7 @@ const Reservation= ({history})=>{
         <Btn onClick={onClick}>
           {value}
         </Btn>
-      );
+    );
 
     useEffect(()=>{
         setFdate(getFormatDate(date));
@@ -144,16 +137,60 @@ const Reservation= ({history})=>{
     <Body><Wrap>
         <TitleWrap><Title>의료기관 찾기</Title> </TitleWrap>
         <ContainerA>
+        <div style={{
+            flexDirection:'row',
+            display:'flex',
+            justifyContent:'center',
+            }}>
         <DatePicker
         selected={date}
         onChange={date => {  
-            setDate(date);}
+            setDate(date);
+            }
         }
         customInput={<ExampleCustomInput />}
         />
-        <Select 
+        <div style={{fontSize:16,
+        marginTop:'5px',
+        width:'171px'}}>
+        <Select
         defaultValue={{value:"Pfizer",label:"화이자"}}
-        options={options}/>
+        options={options}>
+        </Select>
+        </div>
+        </div>
+        <div style={{
+            flexDirection:'row',
+            display:'flex',
+            justifyContent:'center',}}>     
+            <div style={{fontSize:16,
+        margin:'5px 10px 0px 0px',
+        width:'125px'}}>
+        <Select
+        defaultValue={{value:"서울시",label:"서울시"}}
+        options={options}>
+        </Select>
+        </div>
+        <div style={{fontSize:16,
+        margin:'5px 10px 0px 0px',
+        width:'125px'}}>
+        <Select
+        defaultValue={{value:"Pfizer",label:"화이자"}}
+        options={options}>
+        </Select>
+        </div>
+        <div style={{fontSize:16,
+        margin:'5px 10px 0px 0px',
+        width:'125px'}}>
+        <Select
+        defaultValue={{value:"Pfizer",label:"화이자"}}
+        options={options}>
+        </Select>
+        </div>
+        <Btn>
+            인생리셋버튼
+        </Btn>
+        </div>
         </ContainerA>
         <ContainerB>
             히힝
