@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo} from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import Select from "react-select"
 const Body = styled.div`
     display:flex;
     justify-content:center;
@@ -120,7 +120,16 @@ const Reservation= ({history})=>{
     useEffect(()=>{
         setFdate(getFormatDate(date));
     },[date]);
-
+    
+    const options = useMemo(
+        () => [
+          { value: "pFizer", label: "화이자" },
+          { value: "Moderna", label: "모더나"},
+          { value: "AstraZeneca", label: "아스트라제네카"},
+          { value: "Janssen", label: "얀센" },
+        ],
+        []
+      );
 
  /* const onChange1 = (event) => {
         setName(event.target.value);
@@ -142,6 +151,9 @@ const Reservation= ({history})=>{
         }
         customInput={<ExampleCustomInput />}
         />
+        <Select 
+        defaultValue={{value:"Pfizer",label:"화이자"}}
+        options={options}/>
         </ContainerA>
         <ContainerB>
             히힝
