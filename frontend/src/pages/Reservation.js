@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 
 const Body = styled.div`
     display:flex;
@@ -93,10 +96,18 @@ const loginHandler = ({name, RRN, pn}) => {
 }
 
 const Reservation= ({history})=>{
-    const [name,setName] = useState("");
-    const [RRN,setRRN] = useState("");
-    const [pn,setPn] = useState("");
-    const onChange1 = (event) => {
+    const [date,setDate] = useState(new Date());
+    const [si,setSi] = useState("");
+    const [gu,setGu] = useState("");
+    const [dong,setDong] = useState("");
+    
+    const ExampleCustomInput = ({ value, onClick }) => (
+        <Btn onClick={onClick}>
+          {value}
+        </Btn>
+      );
+    console.log({date});
+ /*   const onChange1 = (event) => {
         setName(event.target.value);
     }
     const onChange2 = (event) => {
@@ -104,17 +115,39 @@ const Reservation= ({history})=>{
     }
     const onChange3 = (event) => {
         setPn(event.target.value);
-    }
-    console.log(name,RRN,pn);
+    }*/
      return (
     <Body><Wrap>
         <TitleWrap><Title>의료기관 찾기</Title> </TitleWrap>
-        <ContainerA></ContainerA>
-        <ContainerB></ContainerB>
-        </Wrap>
-    </Body>
+        <ContainerA>
+        <DatePicker
+        selected={date}
+        onChange={date => {
+            
+            var newDate = new Date(date);
+            format(newDate,"yyyy-MM-dd")
+            console.log({newDate});
+            setDate(newDate)}
+        }
+        customInput={<ExampleCustomInput />}
+        />
+        </ContainerA>
+        <ContainerB>
+            히힝
+        </ContainerB>
+    </Wrap></Body>
     );
 };
-
+/*
+const Btn = styled.button`
+    background-color: skyblue;
+    color : white;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 16;
+    margin-left: 40px;
+    cursor: pointer;
+`*/
 
 export default Reservation;
