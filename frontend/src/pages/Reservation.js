@@ -122,7 +122,10 @@ const Reservation= ({history})=>{
           { value: "Janssen", label: "얀센" },
         ],
         []
-      );
+    );
+
+    const temp = window.sessionStorage.getItem('RRN');
+    console.log(temp);
 
  /* const onChange1 = (event) => {
         setName(event.target.value);
