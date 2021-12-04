@@ -65,45 +65,50 @@ const Btn = styled.button`
 const Mypage= ({history})=>{
     
     const RRN = window.sessionStorage.getItem('RRN');
-
-    const [inputData,setInputData]=useState([{
-        uName:'',
-        hName:'',
-        hContact:'',
-        hAddr1:'',
-        hAddr2:'',
-        oHour:'',
-        dDate:'',
-        rVacc:''
-    }])
-    const[lastIdx,setLastIdx]=useState(0)
-
+    
+    const [inputData,setInputData]=useState({
+        hospitalName:'',
+        contact:'',
+        addr1:'',
+        addr2:'',
+        hour:'',
+        date:'',
+        vacc:'',
+        name:''
+    })
+    
     
     useEffect(async()=>{
-        const res = axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}})
-        const _inputData=await res.data.map((rowData)=>(
-            setLastIdx(lastIdx+1),{
-                uName: rowData.name,
-                hName: rowData.hospitalName,
-                hContact: rowData.contact,
-                hAddr1:rowData.address1,
-                hAddr2:rowData.address2,
-                oHour:rowData.Hour,
-                dDate:rowData.Date,
-                rVacc:rowData.vaccine
-            })
-        )
-        setInputData(inputData(_inputData))
-        console.log(inputData)
+        const res = axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}}).then(({data})=>{
+        
+        if(data.result!==false){
+            console.log(data);
+            setInputData(
+                inputData.hospitalName=data[0].hospitalName,
+                inputData.contact=data[0].contact,
+                inputData.addr1=data[0].address1,
+                inputData.addr2=data[0].address2,
+                inputData.hour=data[0].Hour,
+                inputData.date=data[0].Date,
+                inputData.vacc=data[0].vaccine,
+                inputData.name=data[0].name
+            )
+        }
+        console.log(inputData);    
+        
+            
+            
+        });
+        console.log(res.data);
     },[])
-    //console.log(inputData)
+    
 
      return (
     <Body><Wrap>
         <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>
         
         <div
-            style={{marginBottom:"60px"}}>
+            style={{marginBottom:"60px"}}>{inputData.name}
         </div>
         </Wrap>
     </Body>
