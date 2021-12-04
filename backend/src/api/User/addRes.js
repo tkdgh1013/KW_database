@@ -1,7 +1,7 @@
 export default (app, conn) =>{
     app.get('/addRes', (req,res,next)=>{
-        const {DateId,Hour,RRN,vaccine,VaccineNum} = req.query;
-        console.log(DateId,Hour,RRN,vaccine,VaccineNum);
+        const {DateId,Hour,RRN,vaccine} = req.query;
+        console.log(DateId,Hour,RRN,vaccine);
         
 
         var sql1="INSERT INTO reservationinfo(DateId,Hour,RRN,vaccine,VaccineNum) select ?,?,U.RRN,?,U.isVaccinated+1 from user as U where U.RRN=? and U.isVaccinated<2;";
@@ -21,16 +21,18 @@ export default (app, conn) =>{
 
         var sql4="UPDATE user set isVaccinated=isVaccinated+1  WHERE RRN=? and isVaccinated<2;";
 
+        var sql5="UPDATE officehour set CanBeReserved=0 WHERE DateId=? and Hour=? and `reservation limit`<=0;";
 
-        conn.query(sql1+sql2+sql3+sql4,
-        [DateId,Hour,vaccine,RRN,DateId,Hour,RRN,DateId,RRN,RRN],
+
+        conn.query(sql1+sql2+sql3+sql4+sql5,
+        [DateId,Hour,vaccine,RRN,DateId,Hour,RRN,DateId,RRN,RRN,DateId,Hour],
         (err,results,field)=>{
             if(err){
                 res.send({results:false});
                 return;
             }
             else{
-                return res.send({results:true});                 
+                return res.send(results);                 
             }
         })
     });

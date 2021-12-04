@@ -8,7 +8,7 @@ export function init(){
         password:'1234',
         database:'vaccine_reservation',
         dateStrings:'date',
-        multipleStatements: true
+        multipleStatements: true 
 
     });
 }
