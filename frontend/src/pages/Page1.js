@@ -118,7 +118,7 @@ const Page1= ({history})=>{
                 </RightInput>
             </div>   
         <Btn onClick = {()=>loginHandler({name,RRN,pn})}>로그인하기</Btn>
-        <Btn onClick = {()=>{}}>회원가입하기</Btn>
+        <Btn onClick = {()=>{document.location.href = '/signup'}}>회원가입하기</Btn>
         </div>
         </Wrap>
     </Body>
