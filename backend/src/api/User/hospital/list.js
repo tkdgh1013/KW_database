@@ -6,7 +6,7 @@ export default (app, conn) =>{
         "SELECT h.name FROM hospital as h, officedate as d, vaccineinfo as v WHERE h.name=d.hospitalName and d.DateId=v.DateId and d.Date=? and h.address1=CONCAT(?,' ',?,' ',?) and v.Moderna>0",
         "SELECT h.name FROM hospital as h, officedate as d, vaccineinfo as v WHERE h.name=d.hospitalName and d.DateId=v.DateId and d.Date=? and h.address1=CONCAT(?,' ',?,' ',?) and v.AstraZeneca>0",
         "SELECT h.name FROM hospital as h, officedate as d, vaccineinfo as v WHERE h.name=d.hospitalName and d.DateId=v.DateId and d.Date=? and h.address1=CONCAT(?,' ',?,' ',?) and v.Janssen>0"]
-        var query;
+        var query; 
         if(vaccine==="Pfizer")
             query=queries[0];
         else if(vaccine==="Moderna")
