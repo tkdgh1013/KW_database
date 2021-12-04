@@ -59,7 +59,9 @@ const loginHandler = ({name, RRN, pn}) => {
 }
 
 const Home= ()=>{
-     return (
+    const temp = window.sessionStorage.getItem('RRN');
+    console.log(temp);
+    return (
     <Body><Wrap>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <ContainerA>

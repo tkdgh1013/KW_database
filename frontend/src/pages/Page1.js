@@ -62,7 +62,8 @@ const Btn = styled.button`
 const loginHandler = ({name, RRN, pn}) => {
     axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
         if(data.result===true){
-            document.location.href = '/page2'
+            window.sessionStorage.setItem('RRN', RRN);
+            document.location.href = '/home'
         }
         else{
                 alert("입력하신 이름과 주민번호, 연락처가 일치하지 않습니다.");
