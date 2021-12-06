@@ -96,6 +96,19 @@ function MyReservation(props){
         splitString[6]='얀센';
     }
 
+    if(splitString[15]==='Pfizer'){
+        splitString[15]='화이자';
+    }
+    else if(splitString[15]==='Moderna'){
+        splitString[15]='모더나';
+    }
+    else if(splitString[15]==='AstraZeneca'){
+        splitString[15]='아스트라제네카';
+    }
+    else if(splitString[15==='Janssen']) {
+        splitString[15]='얀센';
+    }
+
     if(isExist===0){
         return <div>예약 정보가 없습니다.</div>
     }
