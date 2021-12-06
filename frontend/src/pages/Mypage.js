@@ -64,7 +64,7 @@ const Btn = styled.button`
 const BtnWrap = styled.div`
     display:flex;
     justify-content: flex-end;
-
+    margin-bottom: 20px;
 `
 
 const deleteHandler = ({index,RRN,vaccine}) => {
@@ -139,69 +139,73 @@ function MyReservation(props){
     }
     else if(isExist===2){
         return (
-        <div>
+            <div>
             <Box>
-            <div style={{backgroundColor:'#ACC7EE',
-        padding:'16px',
-        fontFamily:'Noto Sans KR'}}>
-                1차 백신 예약 정보
+                <div style={{backgroundColor:'#ACC7EE',
+            padding:'16px'}}>
+                    1차 백신 예약 정보
+                </div>
+                <div style={{backgroundColor:'#DEEAF7',
+                    padding:'16px',
+                    fontSize:'20px',
+                    marginBottom:'10px'}}>
+                <div>
+                <span style={{marginRight:'15px'}}>{splitString[5]}</span>
+                <span>{splitString[4]}시</span>
+                </div>
+                <div>
+                </div>
+                <div>
+                <span>{splitString[0]}</span>
+                </div>
+                <div>
+                <span>주소 : {splitString[2]} {splitString[3]}</span>
+                </div>
+                <div>
+                <span>연락처 : {splitString[1]}</span>
+                </div>
+                <div>
+                <span>백신 : {splitString[6]}</span>
+                </div>
+                </div>
+            </Box>
+            <BtnWrap>   
+            <Btn onClick={()=>deleteHandler({index:splitString[8],RRN:RRN,vaccine:splitString[6]})}>예약 취소</Btn>
+            </BtnWrap>
+
+            <Box>
+                <div style={{backgroundColor:'#ACC7EE',
+            padding:'16px'}}>
+                    2차 백신 예약 정보
+                </div>
+                <div style={{backgroundColor:'#DEEAF7',
+                    padding:'16px',
+                    fontSize:'20px',
+                    marginBottom:'10px'}}>
+                <div>
+                <span style={{marginRight:'15px'}}>{splitString[14]}</span>
+                <span>{splitString[13]}시</span>
+                </div>
+                <div>
+                </div>
+                <div>
+                <span>{splitString[9]}</span>
+                </div>
+                <div>
+                <span>주소 : {splitString[11]} {splitString[12]}</span>
+                </div>
+                <div>
+                <span>연락처 : {splitString[10]}</span>
+                </div>
+                <div>
+                <span>백신 : {splitString[15]}</span>
+                </div>
+                </div>
+            </Box>
+            <BtnWrap>   
+            <Btn onClick={()=>deleteHandler({index:splitString[17],RRN:RRN,vaccine:splitString[15]})}>예약 취소</Btn>
+            </BtnWrap>
             </div>
-            <div style={{backgroundColor:'#DEEAF7',
-                padding:'16px'}}>
-            <div>
-            <span>{splitString[0]}</span>
-            <span>{splitString[1]}</span>
-            </div>
-            <div>
-            </div>
-            <div>
-            <span>{splitString[2]}</span>
-            </div>
-            <div>
-            <span>{splitString[3]}</span>
-            </div>
-            <div>
-            <span>{splitString[4]}</span>
-            </div>
-            <div>
-            <span>{splitString[5]}</span>
-            </div>
-            <div>
-            <span>{splitString[6]}</span>
-            </div>
-            <div>
-            <span>{splitString[7]}</span>
-            </div>
-            </div>
-        </Box> 
-        <Box>
-            <div>
-            <span>{splitString[8]}</span>
-            </div>
-            <div>
-            <span>{splitString[9]}</span>
-            </div>
-            <div>
-            <span>{splitString[10]}</span>
-            </div>
-            <div>
-            <span>{splitString[11]}</span>
-            </div>
-            <div>
-            <span>{splitString[12]}</span>
-            </div>
-            <div>
-            <span>{splitString[13]}</span>
-            </div>
-            <div>
-            <span>{splitString[14]}</span>
-            </div>
-            <div>
-            <span>{splitString[15]}</span>
-            </div>
-        </Box> 
-        </div>
-        )
     }
 }
 
