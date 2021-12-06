@@ -206,6 +206,7 @@ function MyReservation(props){
             <Btn onClick={()=>deleteHandler({index:splitString[17],RRN:RRN,vaccine:splitString[15]})}>예약 취소</Btn>
             </BtnWrap>
             </div>
+        );
     }
 }
 
