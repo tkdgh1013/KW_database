@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import styled from 'styled-components';
 import Page1 from './pages/Page1'
 import Page2 from './pages/Page2'
 import Signup from './pages/Signup'

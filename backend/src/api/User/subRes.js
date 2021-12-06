@@ -33,7 +33,7 @@ export default (app, conn) =>{
                 return;
             }
             else{
-                return res.send(results);                 
+                return res.send({results:true});                 
             }
         })
     });
