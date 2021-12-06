@@ -9,20 +9,24 @@ const Body = styled.div`
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    font-size:25px;
-    height:500px;  
+    font-size:25px; 
 `
 
 const Wrap = styled.div`
-    
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 `
 
 const Title = styled.div`
     display:flex;
-    text-align:center;
+    justify-content:center;
+    align-items:center;
 `
 
 const TitleWrap = styled.div`
+    position:relative;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -30,13 +34,21 @@ const TitleWrap = styled.div`
     height:80px;
     background-color:#A6A6A6;
     border-radius: 10px;
+    margin-top:70px;
+    margin-bottom:20px;
 `
 
 const Box = styled.div`
+
+    position:relative;
     width:600px;
-    height:400px;
     text-align:center;
     background-color: skyblue;
+    border-radius: 10px;
+`
+
+const ContainerA = styled.div`
+    display:flex;
 `
 
 const Btn = styled.button`
@@ -57,7 +69,7 @@ function MyReservation(props){
         return <div>예약 정보가 없습니다.</div>
     }
     else if(isExist===1){
-        return ( <div>
+        return ( <Box>
             <div>
             <span>{splitString[0]}</span>
             </div>
@@ -82,13 +94,65 @@ function MyReservation(props){
             <div>
             <span>{splitString[7]}</span>
             </div>
-        </div>
-            
+        </Box>            
         );
     }
     else if(isExist===2){
         return (
-            <div>예약 정보가 2개 입니다.</div>
+            <div>
+            <Box>
+            <div>
+            <span>{splitString[0]}</span>
+            </div>
+            <div>
+            <span>{splitString[1]}</span>
+            </div>
+            <div>
+            <span>{splitString[2]}</span>
+            </div>
+            <div>
+            <span>{splitString[3]}</span>
+            </div>
+            <div>
+            <span>{splitString[4]}</span>
+            </div>
+            <div>
+            <span>{splitString[5]}</span>
+            </div>
+            <div>
+            <span>{splitString[6]}</span>
+            </div>
+            <div>
+            <span>{splitString[7]}</span>
+            </div>
+        </Box>
+        <Box>
+            <div>
+            <span>{splitString[9]}</span>
+            </div>
+            <div>
+            <span>{splitString[10]}</span>
+            </div>
+            <div>
+            <span>{splitString[11]}</span>
+            </div>
+            <div>
+            <span>{splitString[12]}</span>
+            </div>
+            <div>
+            <span>{splitString[13]}</span>
+            </div>
+            <div>
+            <span>{splitString[14]}</span>
+            </div>
+            <div>
+            <span>{splitString[15]}</span>
+            </div>
+            <div>
+            <span>{splitString[16]}</span>
+            </div>
+        </Box> 
+        </div>
         )
     }
 }
