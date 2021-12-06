@@ -58,7 +58,7 @@ function MyReservation(props){
     }
     else if(isExist===1){
         return ( <div>
-            <span>{splitString[7]}</span>
+            <span>{splitString[6]}</span>
         </div>
         );
     }
@@ -92,6 +92,7 @@ const Mypage= ({history})=>{
     const [name2,setName2]=useState("");
     const [number,setNumber]=useState(0);   
     
+    useEffect(()=>{
     axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}}).then(({data})=>{
     
     if(data[0]!==undefined){
@@ -120,6 +121,7 @@ const Mypage= ({history})=>{
     console.log(hospitalName1);     
 
     });  
+    },[]);
     
     return (
     <Body><Wrap>

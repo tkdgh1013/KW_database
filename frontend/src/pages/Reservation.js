@@ -50,7 +50,8 @@ const ContainerA = styled.div`
 
 const ContainerB = styled.div`
     display:flex;
-    justify-content:center;
+    
+    align-items:center;
     width:600px;
     height:400px;
     background-color:#A6A6A6;
@@ -74,7 +75,19 @@ const searchRow = styled.div`
     flex-direction:row;
     align-items:center;
 `
+const HospitalList = styled.div`
+    display:flex;
+    flex-direction:column;
+    width:200px;
+`
 
+const DetailInfo = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width:400px;
+`
 
 const loginHandler = ({name, RRN, pn}) => {
     axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
@@ -196,7 +209,12 @@ const Reservation= ({history})=>{
         </div>
         </ContainerA>
         <ContainerB>
-            히힝
+            <HospitalList>
+                여기다 스크롤 바가 있는 병원 목록
+            </HospitalList>
+            <DetailInfo>
+                안녕하세요
+            </DetailInfo>
         </ContainerB>
     </Wrap></Body>
     );
