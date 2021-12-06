@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
@@ -31,10 +32,11 @@ const TitleWrap = styled.div`
     border-radius: 10px;
 `
 
-const box = styled.div`
+const Box = styled.div`
     width:600px;
     height:400px;
     text-align:center;
+    background-color: skyblue;
 `
 
 const Btn = styled.button`
@@ -48,102 +50,88 @@ const Btn = styled.button`
     cursor: pointer;
 `
 
-
+function MyReservation(props){
+    const isExist = props.count;
+    var splitString = props.string.split('|');
+    if(isExist===0){
+        return <div>예약 정보가 없습니다.</div>
+    }
+    else if(isExist===1){
+        return ( <div>
+            <span>{splitString[7]}</span>
+        </div>
+        );
+    }
+    else if(isExist===2){
+        return (
+            <div>예약 정보가 2개 입니다.</div>
+        )
+    }
+}
 
 const Mypage= ({history})=>{
     
     const RRN = window.sessionStorage.getItem('RRN');
-    let count=0;
-    const [info1,setInfo1]=useState({
-        hospitalName:'',
-        contact:'',
-        addr1:'',
-        addr2:'',
-        hour:'',
-        date:'',
-        vacc:'',
-        name:''
-    })
-    const [info2,setInfo2]=useState({
-        hospitalName:'',
-        contact:'',
-        addr1:'',
-        addr2:'',
-        hour:'',
-        date:'',
-        vacc:'',
-        name:''
-    })
+
+    const [hospitalName1,setHospitalName1]=useState("");
+    const [contact1,setContact1]=useState("");
+    const [addr11,setAddr11]=useState("");
+    const [addr21,setAddr21]=useState("");
+    const [hour1,setHour1]=useState("");
+    const [date1,setDate1]=useState("");
+    const [vacc1,setVacc1]=useState("");
+    const [name1,setName1]=useState("");
+
+    const [hospitalName2,setHospitalName2]=useState("");
+    const [contact2,setContact2]=useState("");
+    const [addr12,setAddr12]=useState("");
+    const [addr22,setAddr22]=useState("");
+    const [hour2,setHour2]=useState("");
+    const [date2,setDate2]=useState("");
+    const [vacc2,setVacc2]=useState("");
+    const [name2,setName2]=useState("");
+    const [number,setNumber]=useState(0);   
     
+    axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}}).then(({data})=>{
     
-    useEffect(async()=>{
-        const res = axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}}).then(({data})=>{
+    if(data[0]!==undefined){
+    setNumber(1);
+    setHospitalName1(data[0].hospitalName);
+    setContact1(data[0].contact);
+    setAddr11(data[0].address1);
+    setAddr21(data[0].address2);
+    setHour1(data[0].Hour);
+    setDate1(data[0].Date);
+    setVacc1(data[0].vaccine);
+    setName1(data[0].name);
+    }
         
-        if(data[0]!==undefined){
-            setInfo1(
-                info1.hospitalName=data[0].hospitalName,
-                info1.contact=data[0].contact,
-                info1.addr1=data[0].address1,
-                info1.addr2=data[0].address2,
-                info1.hour=data[0].Hour,
-                info1.date=data[0].Date,
-                info1.vacc=data[0].vaccine,
-                info1.name=data[0].name
-            )
-            count=1;
-            if(data[1]!==undefined){
-                setInfo2(
-                    info2.hospitalName=data[1].hospitalName,
-                    info2.contact=data[1].contact,
-                    info2.addr1=data[1].address1,
-                    info2.addr2=data[1].address2,
-                    info2.hour=data[1].Hour,
-                    info2.date=data[1].Date,
-                    info2.vacc=data[1].vaccine,
-                    info2.name=data[1].name
-                )
-                count=2;
-            }
-        }
-        console.log(info1);    
-        console.log(info2);    
-        });
-        
-    },[])
+    if(data[1]!==undefined){
+    setNumber(2);
+    setHospitalName2(data[1].hospitalName);
+    setContact2(data[1].contact);
+    setAddr12(data[1].address1);
+    setAddr22(data[1].address2);
+    setHour2(data[1].Hour);
+    setDate2(data[1].Date);
+    setVacc2(data[1].vaccine);
+    setName2(data[1].name);
+    }
+    console.log(hospitalName1);     
+
+    });  
     
-    if(count===0){
     return (
     <Body><Wrap>
-        <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>
-        
-        <div
-            style={{marginBottom:"60px"}}>
-        </div>
+        <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>   
+        <MyReservation count={number}
+        string={hospitalName1+'|'+contact1+'|'+addr11+'|'+addr21+
+        '|'+hour1+'|'+date1+'|'+vacc1+'|'+name1+'|'+hospitalName2+
+        '|'+contact2+'|'+addr12+'|'+addr22+'|'+hour2+'|'+date2+'|'+
+        vacc2+'|'+name2}></MyReservation>
         </Wrap>
     </Body>
-    );}
-    if(count===1){
-        return (
-        <Body><Wrap>
-            <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>
-            
-            <div
-                style={{marginBottom:"60px"}}>
-            </div>
-            </Wrap>
-        </Body>
-    );}
-    if(count===2){
-        return (
-        <Body><Wrap>
-            <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>
-            
-            <div
-                style={{marginBottom:"60px"}}>
-            </div>
-            </Wrap>
-        </Body>
-    );}
+    );
 };
 
 
