@@ -58,8 +58,32 @@ function MyReservation(props){
     }
     else if(isExist===1){
         return ( <div>
+            <div>
+            <span>{splitString[0]}</span>
+            </div>
+            <div>
+            <span>{splitString[1]}</span>
+            </div>
+            <div>
+            <span>{splitString[2]}</span>
+            </div>
+            <div>
+            <span>{splitString[3]}</span>
+            </div>
+            <div>
+            <span>{splitString[4]}</span>
+            </div>
+            <div>
+            <span>{splitString[5]}</span>
+            </div>
+            <div>
             <span>{splitString[6]}</span>
+            </div>
+            <div>
+            <span>{splitString[7]}</span>
+            </div>
         </div>
+            
         );
     }
     else if(isExist===2){
