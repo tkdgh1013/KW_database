@@ -45,18 +45,14 @@ const Box = styled.div`
     background-color: skyblue;
 `
 
-const ContainerA = styled.div`
-    display:flex;
-`
-
 const Btn = styled.button`
     display:flex;
     justify-content: center;
     width:100px;
     background-color: skyblue;
-    color : white;
     padding: 10px 20px;
     border: 0;
+    font-weight: bold;
     border-radius: 10px;
     font-size: 16;
     cursor: pointer;
