@@ -127,6 +127,9 @@ function MyReservation(props){
             </div>
         </Box>
         <Box>
+        <div>
+            <span>{splitString[8]}</span>
+            </div>
             <div>
             <span>{splitString[9]}</span>
             </div>
@@ -147,9 +150,6 @@ function MyReservation(props){
             </div>
             <div>
             <span>{splitString[15]}</span>
-            </div>
-            <div>
-            <span>{splitString[16]}</span>
             </div>
         </Box> 
         </div>
