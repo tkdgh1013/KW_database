@@ -23,8 +23,10 @@ export default (app, conn) =>{
 
         var sql5="DELETE FROM reservationinfo WHERE `Index`=?;";
 
-        conn.query(sql1+sql2+sql3+sql4+sql5,
-        [Index,Index,Index,Index,Index,Index,Index,Index],
+        var sql6="UPDATE reservationinfo as R SET VaccineNum=1  WHERE R.RRN IN (SELECT U.RRN FROM user as U WHERE U.RRN=? and isVaccinated=1);";
+
+        conn.query(sql1+sql2+sql3+sql4+sql5+sql6,
+        [Index,Index,Index,Index,Index,RRN],
         (err,results,field)=>{
             if(err){
                 res.send({results:false});
