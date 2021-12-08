@@ -135,11 +135,6 @@ const InputField = styled.input`
     border-radius: 4px;
     font-size: 14px;
 `
-const BtnWrap = styled.div`
-    display:flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-`
 const Btnlogout = styled.button`
     align-items:flex-end;
     align-content: center;

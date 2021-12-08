@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
+import icon from"../images/goback.PNG"
 
 const Body = styled.div`
     display:flex;
@@ -11,9 +12,27 @@ const Body = styled.div`
     font-size:25px;
     height:500px;  
 `
-
-const Wrap = styled.div`
+const User=styled.div`
+    display:flex;
+    align-content : center;
+    width:600px;
+    height:50px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    margin-top:50px;
     
+`
+const ImgWrap = styled.div`
+    display:flex;
+    width:30px;
+    height:30px;
+    padding: 10px 20px;
+`
+const Wrap = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 `
 
 const Title = styled.div`
@@ -59,6 +78,28 @@ const Btn = styled.button`
     margin-left: 40px;
     cursor: pointer;
 `
+const Btnlogout = styled.button`
+    align-items:flex-end;
+    align-content: center;
+    padding: 10px 20px;
+    width:100px;
+    height:40px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    cursor: pointer;
+`
+
+const Name = styled.div`
+    margin-left:330px;
+    padding: 10px 20px;
+`
+
+const logoutHandler = () => {
+    window.sessionStorage.clear();
+    document.location.href = '/'
+}
 const loginHandler = ({name, RRN, pn}) => {
     axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
         if(data.result===true){
@@ -72,27 +113,23 @@ const loginHandler = ({name, RRN, pn}) => {
 }
 
 const View= ({history})=>{
-    const [name,setName] = useState("");
-    const [RRN,setRRN] = useState("");
-    const [pn,setPn] = useState("");
-    const onChange1 = (event) => {
-        setName(event.target.value);
-    }
-    const onChange2 = (event) => {
-        setRRN(event.target.value);
-    }
-    const onChange3 = (event) => {
-        setPn(event.target.value);
-    }
-    console.log(name,RRN,pn);
+    const RRN = window.sessionStorage.getItem('RRN');
+    console.log(RRN);
+    const [username, setUsername] = useState();
+    useEffect(()=>{
+        axios.get('http://localhost:4000/username',{params:{RRN:RRN}}).then(({data})=>{setUsername(data[0].name)});
+    },[])
      return (
     <Body><Wrap>
+        <User><ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
+        <Name>{username}님</Name>
+        <Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout>
+        </User>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <div
             style={{marginBottom:"60px"}}>
                
-        <Btn onClick = {()=>loginHandler({name,RRN,pn})}>로그인하기</Btn>
-        <Btn onClick = {()=>{document.location.href = '/signup'}}>회원가입하기</Btn>
+        
         </div>
         </Wrap>
     </Body>
