@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import DatePicker from "react-datepicker";
+import "@fontsource/noto-sans-kr";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select"
 
@@ -13,17 +14,19 @@ const Body = styled.div`
     align-items:center;
     flex-direction:column;
     font-size:25px;
-    height:800px;  
+    font-family:"Noto Sans KR";
 `
 
 const Wrap = styled.div`
-    
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 `
 
 const Title = styled.div`
     display:flex;
     text-align:center;
-    color : white;
 `
 
 const TitleWrap = styled.div`
@@ -31,18 +34,19 @@ const TitleWrap = styled.div`
     justify-content:center;
     align-items:center;
     width:400px;
-    height:60px;
+    height:80px;
     background-color:#A6A6A6;
     border-radius: 10px;
+    margin-top:70px;
     margin-bottom: 20px;
-    margin-left:100px;
 `
 const ContainerA = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:center;
-    width:600px;
-    height:120px;
+    width:800px;
+    gap:10px;
+    height:150px;
     background-color:#A6A6A6;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -50,10 +54,9 @@ const ContainerA = styled.div`
 
 const ContainerB = styled.div`
     display:flex;
-    
     align-items:center;
-    width:600px;
-    height:400px;
+    width:800px;
+    height:600px;
     background-color:#A6A6A6;
     border-radius: 10px;
 `
@@ -64,12 +67,30 @@ const innerBody = styled.div`
 
 const Btn = styled.button`
     background-color: white;
-    padding: 10px 20px;
+    height:38.19px;
+    padding: 0px 20px;
     border: 0;
     border-radius: 5px;
-    font-size: 16;
+    font-size: 14px;
     cursor: pointer;
+    font-family:"Noto Sans KR";
 `
+
+const Btn1 = styled.button`
+    background-color: #308BFE;
+    color:white;
+    text-align:center;
+    width: 120px;
+    height:38.19px;
+    margin-left:10px;
+    padding: 0px 20px;
+    border: 0;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    font-family:"Noto Sans KR";
+`
+
 const searchRow = styled.div`
     display:flex;
     flex-direction:row;
@@ -156,7 +177,8 @@ const Reservation= ({history})=>{
         <div style={{
             flexDirection:'row',
             display:'flex',
-            justifyContent:'center',
+            justifyContent:'flex-start',
+            marginLeft:'119px'
             }}>
         <DatePicker
         selected={date}
@@ -167,7 +189,8 @@ const Reservation= ({history})=>{
         customInput={<ExampleCustomInput />}
         />
         <div style={{fontSize:16,
-        marginTop:'5px',
+        marginTop:'3px',
+        marginLeft:'24px',
         width:'171px'}}>
         <Select
         defaultValue={{value:"Pfizer",label:"화이자"}}
@@ -180,7 +203,7 @@ const Reservation= ({history})=>{
             display:'flex',
             justifyContent:'center',}}>     
             <div style={{fontSize:16,
-        margin:'5px 10px 0px 0px',
+        margin:'5px 20px 0px 0px',
         width:'125px'}}>
         <Select
         defaultValue={{value:"서울시",label:"서울시"}}
@@ -188,7 +211,7 @@ const Reservation= ({history})=>{
         </Select>
         </div>
         <div style={{fontSize:16,
-        margin:'5px 10px 0px 0px',
+        margin:'5px 20px 0px 0px',
         width:'125px'}}>
         <Select
         defaultValue={{value:"Pfizer",label:"화이자"}}
@@ -196,16 +219,19 @@ const Reservation= ({history})=>{
         </Select>
         </div>
         <div style={{fontSize:16,
-        margin:'5px 10px 0px 0px',
+        margin:'5px 20px 0px 0px',
         width:'125px'}}>
         <Select
         defaultValue={{value:"Pfizer",label:"화이자"}}
         options={options}>
         </Select>
         </div>
-        <Btn>
-            인생리셋버튼
-        </Btn>
+        <div style={{marginTop:'2px',
+        }}>
+        <Btn1>
+            검색
+        </Btn1>
+        </div>
         </div>
         </ContainerA>
         <ContainerB>
