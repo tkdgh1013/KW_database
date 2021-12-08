@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "@fontsource/noto-sans-kr";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select"
-
+import icon from"../images/goback.PNG"
 
 const Body = styled.div`
     display:flex;
@@ -17,7 +17,22 @@ const Body = styled.div`
     font-size:25px;
     font-family:"Noto Sans KR";
 `
-
+const User=styled.div`
+    display:flex;
+    align-content : center;
+    width:600px;
+    height:50px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    margin-top:50px;
+    
+`
+const ImgWrap = styled.div`
+    display:flex;
+    width:30px;
+    height:30px;
+    padding: 10px 20px;
+`
 const Wrap = styled.div`
     display:flex;
     flex-direction:column;
@@ -38,7 +53,7 @@ const TitleWrap = styled.div`
     height:80px;
     background-color:#A6A6A6;
     border-radius: 10px;
-    margin-top:70px;
+    margin-top:20px;
     margin-bottom: 20px;
 `
 const ContainerA = styled.div`
@@ -120,6 +135,32 @@ const InputField = styled.input`
     border-radius: 4px;
     font-size: 14px;
 `
+const BtnWrap = styled.div`
+    display:flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+`
+const Btnlogout = styled.button`
+    align-items:flex-end;
+    align-content: center;
+    padding: 10px 20px;
+    width:100px;
+    height:40px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    cursor: pointer;
+`
+
+const Name = styled.div`
+    margin-left:330px;
+    padding: 10px 20px;
+`
+const logoutHandler = () => {
+    window.sessionStorage.clear();
+    document.location.href = '/'
+}
 
 const loginHandler = ({name, RRN, pn}) => {
     axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
@@ -169,8 +210,12 @@ const Reservation= ({history})=>{
         []
     );
 
-    const temp = window.sessionStorage.getItem('RRN');
-    console.log(temp);
+    const RRN = window.sessionStorage.getItem('RRN');
+    const [username, setUsername] = useState();
+    useEffect(()=>{
+        axios.get('http://localhost:4000/username',{params:{RRN:RRN}}).then(({data})=>{setUsername(data[0].name)});
+    },[])
+    console.log(RRN);
 
  /* const onChange1 = (event) => {
         setName(event.target.value);
@@ -183,6 +228,10 @@ const Reservation= ({history})=>{
     }*/
     return (
     <Body><Wrap>
+        <User><ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
+        <Name>{username}님</Name>
+        <Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout>
+        </User>
         <TitleWrap><Title>의료기관 찾기</Title> </TitleWrap>
         <ContainerA>
         <div style={{
