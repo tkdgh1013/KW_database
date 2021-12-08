@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
 import "@fontsource/noto-sans-kr";
-import { Link } from 'react-router-dom';
 
 const Body = styled.div`
     display:flex;

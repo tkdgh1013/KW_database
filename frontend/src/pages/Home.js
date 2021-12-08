@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import styled from 'styled-components'
 import "@fontsource/noto-sans-kr";
-import { Link } from 'react-router-dom';
 
 const Body = styled.div`
     display:flex;
@@ -54,17 +52,6 @@ const Btn = styled.button`
     font-family:"Noto Sans KR";
     cursor: pointer;
 `
-const loginHandler = ({name, RRN, pn}) => {
-    axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
-        if(data.result===true){
-            document.location.href = '/page2'
-        }
-        else{
-                alert("입력하신 이름과 주민번호, 연락처가 일치하지 않습니다.");
-        }
-    });
-    
-}
 
 const Home= ()=>{
     const temp = window.sessionStorage.getItem('RRN');

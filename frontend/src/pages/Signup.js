@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
+import "@fontsource/noto-sans-kr";
 
 const Body = styled.div`
     display:flex;
@@ -9,11 +9,17 @@ const Body = styled.div`
     align-items:center;
     flex-direction:column;
     font-size:25px;
-    height:500px;  
+    font-family:"Noto Sans KR";
 `
 
 const Wrap = styled.div`
     
+`
+
+const BtnWrap = styled.div`
+    display:flex;
+    justify-content:center;
+    align-items:center;
 `
 
 const Title = styled.div`
@@ -29,6 +35,8 @@ const TitleWrap = styled.div`
     height:80px;
     background-color:#A6A6A6;
     border-radius: 10px;
+    margin-top:70px;
+    margin-bottom: 40px;
 `
 
 const LeftInput = styled.span`
@@ -50,16 +58,36 @@ const innerBody = styled.div`
 `
 
 const Btn = styled.button`
-    background-color: skyblue;
+    background-color: #308BFE;
     color : white;
     padding: 10px 20px;
     border: 0;
     border-radius: 10px;
-    font-size: 16;
-    margin-left: 40px;
+    font-size: 18px;
     cursor: pointer;
 `
 const signupHandler = ({name, RRN, pn, addr}) => {
+    console.log("머냐?",name, RRN, pn, addr)
+    if(name===null)
+    {
+        alert("이름을 입력해주십시오.");
+    }
+    else if(RRN===null)
+    {
+        alert("주민번호를 입력해주십시오.");
+        return;
+    }
+    else if(pn===null)
+    {
+        alert("전화번호를 입력해주십시오.");
+        return;
+    }
+    else if(addr===null)
+    {
+        alert("주소를 입력해주십시오.");
+        return;
+    }
+
     axios.get("http://localhost:4000/join", {params:{userName : name, RRN: RRN, phoneNumber:pn, address:addr}}).then(({data})=>{
         if(data.result===true){
             document.location.href = '/'
@@ -93,7 +121,8 @@ const Signup= ({history})=>{
     <Body><Wrap>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <div
-            style={{marginBottom:"60px"}}>
+            style={{marginBottom:"40px",
+            fontSize:'19px'}}>
             <div style={{margin:'20px'}}>
                 <LeftInput>이름 :</LeftInput>
                 <RightInput>
@@ -130,8 +159,10 @@ const Signup= ({history})=>{
                     onChange={onChange4}/>
                 </RightInput>
             </div> 
-        <Btn onClick = {()=>signupHandler({name,RRN,pn,addr})}>회원가입하기</Btn>
         </div>
+        <BtnWrap>
+        <Btn onClick = {()=>signupHandler({name,RRN,pn,addr})}>회원가입하기</Btn>
+        </BtnWrap>
         </Wrap>
     </Body>
     );

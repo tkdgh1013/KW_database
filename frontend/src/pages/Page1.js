@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
+import "@fontsource/noto-sans-kr";
 import { Link } from 'react-router-dom';
 
 const Body = styled.div`
@@ -9,7 +10,7 @@ const Body = styled.div`
     align-items:center;
     flex-direction:column;
     font-size:25px;
-    height:500px;  
+    font-family:"Noto Sans KR";
 `
 
 const Wrap = styled.div`
@@ -29,6 +30,8 @@ const TitleWrap = styled.div`
     height:80px;
     background-color:#A6A6A6;
     border-radius: 10px;
+    margin-top:70px;
+    margin-bottom: 40px;
 `
 
 const LeftInput = styled.span`
@@ -50,12 +53,12 @@ const innerBody = styled.div`
 `
 
 const Btn = styled.button`
-    background-color: skyblue;
+    background-color: #308BFE;
     color : white;
     padding: 10px 20px;
     border: 0;
     border-radius: 10px;
-    font-size: 16;
+    font-size: 18px;
     margin-left: 40px;
     cursor: pointer;
 `
@@ -85,12 +88,12 @@ const Page1= ({history})=>{
     const onChange3 = (event) => {
         setPn(event.target.value);
     }
-    console.log(name,RRN,pn);
      return (
     <Body><Wrap>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <div
-            style={{marginBottom:"60px"}}>
+            style={{marginBottom:"30px",
+            fontSize:"19px"}}>
             <div style={{margin:'20px'}}>
                 <LeftInput>이름 :</LeftInput>
                 <RightInput>
@@ -118,9 +121,9 @@ const Page1= ({history})=>{
                     onChange={onChange3}/>
                 </RightInput>
             </div>   
+        </div>
         <Btn onClick = {()=>loginHandler({name,RRN,pn})}>로그인하기</Btn>
         <Btn onClick = {()=>{document.location.href = '/signup'}}>회원가입하기</Btn>
-        </div>
         </Wrap>
     </Body>
     );
