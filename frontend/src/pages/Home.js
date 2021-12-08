@@ -23,19 +23,6 @@ const User=styled.div`
     margin-left:300px;
 `
 
-const Btnlogout = styled.button`
-    align-content: center;
-    padding: 10px 20px;
-    width:100px;
-    height:40px;
-    border: 0;
-    border-radius: 10px;
-    font-size: 15px;
-    font-family:"Noto Sans KR";
-    cursor: pointer;
-    margin-left:20px;
-`
-
 const Wrap = styled.div`
     display:flex;
     flex-direction:column;
@@ -77,6 +64,23 @@ const Btn = styled.button`
     font-family:"Noto Sans KR";
     cursor: pointer;
 `
+
+const Btnlogout = styled.button`
+    align-content: center;
+    padding: 10px 20px;
+    width:100px;
+    height:40px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    cursor: pointer;
+`
+
+const Name = styled.div`
+    padding: 10px 20px;
+`
+
 const logoutHandler = () => {
     window.sessionStorage.clear();
     document.location.href = '/'
@@ -92,8 +96,7 @@ const Home= ()=>{
     console.log(username);
     return (
     <Body>
-        <User><div style={{textAlign:'center'}}>{username}님</div><Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout></User>
-        
+        <User><Name>{username}님</Name><Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout></User>
         <Wrap>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <ContainerA>
