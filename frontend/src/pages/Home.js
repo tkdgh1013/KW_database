@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components'
 import "@fontsource/noto-sans-kr";
 
@@ -10,6 +11,18 @@ const Body = styled.div`
     font-size:25px;
     font-family:"Noto Sans KR";
 `
+const User=styled.div`
+    display:flex;
+    align-content : center;
+    width:300px;
+    height:50px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    justify-content:right;
+    margin-top:50px;
+    margin-left:300px;
+`
+
 const Btnlogout = styled.button`
     align-content: center;
     padding: 10px 20px;
@@ -20,8 +33,7 @@ const Btnlogout = styled.button`
     font-size: 15px;
     font-family:"Noto Sans KR";
     cursor: pointer;
-    margin-top:50px;
-    margin-left:500px;
+    margin-left:20px;
 `
 
 const Wrap = styled.div`
@@ -71,11 +83,17 @@ const logoutHandler = () => {
 }
 
 const Home= ()=>{
-    const temp = window.sessionStorage.getItem('RRN');
-    console.log(temp);
+    const RRN = window.sessionStorage.getItem('RRN');
+    console.log(RRN);
+    const [username, setUsername] = useState();
+    useEffect(()=>{
+        axios.get('http://localhost:4000/username',{params:{RRN:RRN}}).then(({data})=>{setUsername(data[0].name)});
+    },[])
+    console.log(username);
     return (
     <Body>
-        <Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout>
+        <User><div style={{textAlign:'center'}}>{username}님</div><Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout></User>
+        
         <Wrap>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <ContainerA>

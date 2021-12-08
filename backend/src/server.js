@@ -1,7 +1,7 @@
 import express from 'express';
 import { init } from './config/db.js';
 import cors from 'cors';
-import testUser from './api/user/testuser.js';
+import username from './api/User/username.js';
 import login from './api/User/login.js';
 import join from './api/User/join.js';
 import list from './api/User/hospital/list.js';
@@ -28,7 +28,7 @@ app.use(
 );
 
 const router = express.Router();
-testUser(app,conn);
+username(app,conn);
 login(app,conn);
 join(app,conn);
 list(app,conn);
