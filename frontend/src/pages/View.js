@@ -119,6 +119,15 @@ const View= ({history})=>{
     useEffect(()=>{
         axios.get('http://localhost:4000/username',{params:{RRN:RRN}}).then(({data})=>{setUsername(data[0].name)});
     },[])
+
+    useEffect(()=>{
+        axios.get("http://localhost:4000/count", {}).then(({data})=>{
+        
+        console.log(data);
+    
+        });  
+        },[]);
+
      return (
     <Body><Wrap>
         <User><ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
