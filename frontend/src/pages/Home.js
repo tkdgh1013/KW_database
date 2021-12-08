@@ -10,6 +10,19 @@ const Body = styled.div`
     font-size:25px;
     font-family:"Noto Sans KR";
 `
+const Btnlogout = styled.button`
+    align-content: center;
+    padding: 10px 20px;
+    width:100px;
+    height:40px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    cursor: pointer;
+    margin-top:50px;
+    margin-left:500px;
+`
 
 const Wrap = styled.div`
     display:flex;
@@ -30,7 +43,7 @@ const TitleWrap = styled.div`
     height:80px;
     background-color:#A6A6A6;
     border-radius: 10px;
-    margin-top:70px;
+    margin-top:20px;
     margin-bottom: 40px;
 `
 const ContainerA = styled.div`
@@ -52,12 +65,18 @@ const Btn = styled.button`
     font-family:"Noto Sans KR";
     cursor: pointer;
 `
+const logoutHandler = () => {
+    window.sessionStorage.clear();
+    document.location.href = '/'
+}
 
 const Home= ()=>{
     const temp = window.sessionStorage.getItem('RRN');
     console.log(temp);
     return (
-    <Body><Wrap>
+    <Body>
+        <Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout>
+        <Wrap>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <ContainerA>
             <Btn style={{backgroundColor:'#FF9595'}} onClick ={()=>{document.location.href = '/Reservation'}}>백신 접종<br/>예약</Btn>
