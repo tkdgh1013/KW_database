@@ -43,7 +43,7 @@ const TitleWrap = styled.div`
     background-color:#A6A6A6;
     border-radius: 10px;
     margin-top:20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 `
 const ContainerA = styled.div`
     width:600px;
