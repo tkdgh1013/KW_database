@@ -13,11 +13,21 @@ const Body = styled.div`
     font-size:25px; 
     font-family:"Noto Sans KR";
 `
+const User=styled.div`
+    display:flex;
+    align-content : center;
+    width:600px;
+    height:50px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    margin-top:50px;
+    
+`
 const ImgWrap = styled.div`
     display:flex;
-    justify-content:flex-start;
-    width:600px;
-    margin-top:50px;
+    width:30px;
+    height:30px;
+    padding: 10px 20px;
 `
 
 const Wrap = styled.div`
@@ -68,6 +78,27 @@ const BtnWrap = styled.div`
     justify-content: flex-end;
     margin-bottom: 20px;
 `
+const Btnlogout = styled.button`
+    align-items:flex-end;
+    align-content: center;
+    padding: 10px 20px;
+    width:100px;
+    height:40px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family:"Noto Sans KR";
+    cursor: pointer;
+`
+
+const Name = styled.div`
+    margin-left:330px;
+    padding: 10px 20px;
+`
+const logoutHandler = () => {
+    window.sessionStorage.clear();
+    document.location.href = '/'
+}
 
 const deleteHandler = ({index,RRN,vaccine}) => {
     axios.get("http://localhost:4000/subRes", {params:{Index : index, RRN: RRN, vaccine:vaccine}}).then(({data})=>{
@@ -228,6 +259,10 @@ function MyReservation(props){
 const Mypage= ({history})=>{
     
     const RRN = window.sessionStorage.getItem('RRN');
+    const [username, setUsername] = useState();
+    useEffect(()=>{
+        axios.get('http://localhost:4000/username',{params:{RRN:RRN}}).then(({data})=>{setUsername(data[0].name)});
+    },[])
 
     const [hospitalName1,setHospitalName1]=useState("");
     const [contact1,setContact1]=useState("");
@@ -287,7 +322,10 @@ const Mypage= ({history})=>{
     
     return (
     <Body><Wrap>
-        <ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
+        <User><ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
+        <Name>{username}님</Name>
+        <Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout>
+        </User>
         <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>   
         <MyReservation count={number}
         RRN={RRN}
