@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "@fontsource/noto-sans-kr";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select"
+
 
 const Body = styled.div`
     display:flex;
@@ -45,7 +46,7 @@ const ContainerA = styled.div`
     flex-direction:column;
     justify-content:center;
     width:800px;
-    gap:10px;
+    gap:20px;
     height:150px;
     background-color:#A6A6A6;
     border-radius: 10px;
@@ -98,8 +99,10 @@ const searchRow = styled.div`
 `
 const HospitalList = styled.div`
     display:flex;
+    height: 600px;
     flex-direction:column;
     width:200px;
+    overflow: scroll;
 `
 
 const DetailInfo = styled.div`
@@ -108,6 +111,14 @@ const DetailInfo = styled.div`
     justify-content:center;
     align-items:center;
     width:400px;
+`
+
+const InputField = styled.input`
+    width:100px;
+    height:36.19px;
+    border:0px;
+    border-radius: 4px;
+    font-size: 14px;
 `
 
 const loginHandler = ({name, RRN, pn}) => {
@@ -178,7 +189,7 @@ const Reservation= ({history})=>{
             flexDirection:'row',
             display:'flex',
             justifyContent:'flex-start',
-            marginLeft:'119px'
+            marginLeft:'150px'
             }}>
         <DatePicker
         selected={date}
@@ -201,41 +212,32 @@ const Reservation= ({history})=>{
         <div style={{
             flexDirection:'row',
             display:'flex',
-            justifyContent:'center',}}>     
-            <div style={{fontSize:16,
-        margin:'5px 20px 0px 0px',
-        width:'125px'}}>
-        <Select
-        defaultValue={{value:"서울시",label:"서울시"}}
-        options={options}>
-        </Select>
-        </div>
-        <div style={{fontSize:16,
-        margin:'5px 20px 0px 0px',
-        width:'125px'}}>
-        <Select
-        defaultValue={{value:"Pfizer",label:"화이자"}}
-        options={options}>
-        </Select>
-        </div>
-        <div style={{fontSize:16,
-        margin:'5px 20px 0px 0px',
-        width:'125px'}}>
-        <Select
-        defaultValue={{value:"Pfizer",label:"화이자"}}
-        options={options}>
-        </Select>
-        </div>
-        <div style={{marginTop:'2px',
-        }}>
+            justifyContent:'center',
+            gap:'20px'}}>     
+        <InputField placeholder="OO시"/>
+        <InputField placeholder="OO구"/>
+        <InputField placeholder="OO동"/>
         <Btn1>
             검색
         </Btn1>
         </div>
-        </div>
         </ContainerA>
         <ContainerB>
             <HospitalList>
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
+                여기다 스크롤 바가 있는 병원 목록
                 여기다 스크롤 바가 있는 병원 목록
             </HospitalList>
             <DetailInfo>
