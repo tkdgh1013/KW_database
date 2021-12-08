@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
 import "@fontsource/noto-sans-kr";
+import icon from"../images/goback.PNG"
 
 const Body = styled.div`
     display:flex;
@@ -11,6 +12,12 @@ const Body = styled.div`
     flex-direction:column;
     font-size:25px; 
     font-family:"Noto Sans KR";
+`
+const ImgWrap = styled.div`
+    display:flex;
+    justify-content:flex-start;
+    width:600px;
+    margin-top:50px;
 `
 
 const Wrap = styled.div`
@@ -34,7 +41,7 @@ const TitleWrap = styled.div`
     height:80px;
     background-color:#A6A6A6;
     border-radius: 10px;
-    margin-top:70px;
+    margin-top:20px;
     margin-bottom:20px;
 `
 
@@ -280,6 +287,7 @@ const Mypage= ({history})=>{
     
     return (
     <Body><Wrap>
+        <ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
         <TitleWrap><Title>백신 예약 조회 / 취소</Title> </TitleWrap>   
         <MyReservation count={number}
         RRN={RRN}
