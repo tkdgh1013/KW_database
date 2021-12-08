@@ -67,22 +67,32 @@ const Btn = styled.button`
     cursor: pointer;
 `
 const signupHandler = ({name, RRN, pn, addr}) => {
-    console.log("머냐?",name, RRN, pn, addr)
-    if(name===null)
+    if(name==="")
     {
         alert("이름을 입력해주십시오.");
+        return;
     }
-    else if(RRN===null)
+    else if(RRN==="")
     {
         alert("주민번호를 입력해주십시오.");
         return;
     }
-    else if(pn===null)
+    else if(RRN[6]!=='-' || RRN.length!==14)
+    {
+        alert("주민번호를 올바르게 입력해주십시오.\n예) 000000-0000000");
+        return;
+    }
+    else if(pn==="")
     {
         alert("전화번호를 입력해주십시오.");
         return;
     }
-    else if(addr===null)
+    else if(pn[3]!=='-' || pn[8]!=='-' || pn.length!==13)
+    {
+        alert("전화번호를 올바르게 입력해주십시오.\n예) 000-0000-0000");
+        return;
+    }
+    else if(addr==="")
     {
         alert("주소를 입력해주십시오.");
         return;
