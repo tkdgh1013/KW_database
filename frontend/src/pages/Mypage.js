@@ -114,6 +114,10 @@ const deleteHandler = ({index,RRN,vaccine}) => {
 
 function MyReservation(props){
     const isExist = props.count;
+    if(isExist===100)
+    {
+        return <div>로딩중...</div>
+    }
     var splitString = props.string.split('|');
     const RRN = props.RRN;
     if(splitString[6]==='Pfizer'){
@@ -284,7 +288,7 @@ const Mypage= ({history})=>{
     const [name2,setName2]=useState("");
     const [idx2,setIdx2]=useState("");
 
-    const [number,setNumber]=useState(0);   
+    const [number,setNumber]=useState(100);   
     
     useEffect(()=>{
     axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}}).then(({data})=>{
