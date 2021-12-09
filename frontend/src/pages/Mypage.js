@@ -294,6 +294,10 @@ const Mypage= ({history})=>{
     axios.get("http://localhost:4000/vaccine_info", {params:{RRN: RRN}}).then(({data})=>{
     
     console.log(data);
+    
+    if(data.result===false){
+        setNumber(0);
+    }
 
     if(data[0]!==undefined){
     setNumber(1);

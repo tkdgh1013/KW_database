@@ -1,12 +1,10 @@
 import React, { useState, memo } from 'react';
 import { useEffect } from 'react';
-import { useMemo } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import DatePicker from "react-datepicker";
 import "@fontsource/noto-sans-kr";
 import "react-datepicker/dist/react-datepicker.css";
-import Select from "react-select"
 import icon from"../images/goback.PNG"
 
 const Body = styled.div`
@@ -68,19 +66,6 @@ const ContainerA = styled.div`
     margin-bottom: 20px;
 `
 
-const ContainerB = styled.div`
-    display:flex;
-    align-items:center;
-    width:800px;
-    height:600px;
-    background-color:#A6A6A6;
-    border-radius: 10px;
-`
-
-const innerBody = styled.div`
-    margin:10px;
-`
-
 const Btn = styled.button`
     background-color: white;
     height:38.19px;
@@ -107,17 +92,19 @@ const Btn1 = styled.button`
     font-family:"Noto Sans KR";
 `
 
-const searchRow = styled.div`
+const ContainerB = styled.div`
     display:flex;
-    flex-direction:row;
-    align-items:center;
-`
-const HospitalList = styled.div`
-    display:flex;
-    height: 600px;
+    align-items:flex-start;
     flex-direction:column;
-    width:200px;
-    overflow: scroll;
+    width:800px;
+    background-color:#A6A6A6;
+    border-radius: 10px;
+    padding: 5px 20px 20px 20px;
+`
+
+const ListWrap = styled.div`
+    display:flex;
+    align-items:center;
 `
 
 const DetailInfo = styled.div`
@@ -125,7 +112,7 @@ const DetailInfo = styled.div`
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    width:400px;
+    width:500px;
 `
 
 const InputField = styled.input`
@@ -157,6 +144,37 @@ const logoutHandler = () => {
     document.location.href = '/'
 }
 
+function HospitalList(prop){
+    const result = [];
+    const [hospitalName, setHospitalName] = useState();
+    console.log(prop);
+    axios.get("http://localhost:4000/list", {params:{date : prop.date, address1: prop.si, address2: prop.gu, address3: prop.dong, vaccine:prop.vaccine}}).then(({data})=>{
+        console.log(data);
+    })
+    useEffect(()=>{
+        
+    },[])
+    if(prop.isClicked===false)
+    {
+        return <div>없어</div>;
+    }
+    for (let i=0; i<5; i++){
+        result.push(<div>for문 체크 {i}</div>)
+    }
+    return(
+        <div style={{display:'flex',
+        height:'600px',
+        width:'300px',
+        flexDirection:'column',
+        overflow:'scroll'
+        }}>
+        {result}
+        </div>
+    );
+}
+
+
+
 const loginHandler = ({name, RRN, pn}) => {
     axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
         if(data.result===true){
@@ -184,6 +202,8 @@ const Reservation= ({history})=>{
     const [si,setSi] = useState("");
     const [gu,setGu] = useState("");
     const [dong,setDong] = useState("");
+    const [vaccine,setVaccine] = useState();
+    const [isClick,setIsClick] = useState(false);
     
     const ExampleCustomInput = ({ value, onClick }) => (
         <Btn onClick={onClick}>
@@ -193,34 +213,36 @@ const Reservation= ({history})=>{
 
     useEffect(()=>{
         setFdate(getFormatDate(date));
-    },[date]);
-    
-    const options = useMemo(
-        () => [
-          { value: "pFizer", label: "화이자" },
-          { value: "Moderna", label: "모더나"},
-          { value: "AstraZeneca", label: "아스트라제네카"},
-          { value: "Janssen", label: "얀센" },
-        ],
-        []
-    );
+    },[date]);    
 
     const RRN = window.sessionStorage.getItem('RRN');
+
     const [username, setUsername] = useState();
     useEffect(()=>{
         axios.get('http://localhost:4000/username',{params:{RRN:RRN}}).then(({data})=>{setUsername(data[0].name)});
     },[])
-    console.log(RRN);
 
- /* const onChange1 = (event) => {
-        setName(event.target.value);
+    const onChange1 = (event) => {
+        setSi(event.target.value);
     }
     const onChange2 = (event) => {
-        setRRN(event.target.value);
+        setGu(event.target.value);
     }
     const onChange3 = (event) => {
-        setPn(event.target.value);
-    }*/
+        setDong(event.target.value);
+    }
+    const onChange4 = (event) => {
+        setVaccine(event.target.value);
+    }
+    const onClicked = ()=>{
+        if(si[(si.length)-1]!=='시'||gu[(si.length)-1]!=='구'||dong[(dong.length)-1]!=='동'&&(vaccine==='화이자'||vaccine==='모더나'||vaccine==='아스트라제네카'||vaccine==='얀센'))
+        {
+            alert("검색 옵션을 알맞게 입력해주십시오.");
+            return;
+        }
+        setIsClick(true);
+    }
+    console.log(vaccine);
     return (
     <Body><Wrap>
         <User><ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
@@ -247,10 +269,12 @@ const Reservation= ({history})=>{
         marginTop:'3px',
         marginLeft:'24px',
         width:'171px'}}>
-        <Select
-        defaultValue={{value:"Pfizer",label:"화이자"}}
-        options={options}>
-        </Select>
+        
+        <InputField 
+        value={vaccine}
+        placeholder="화이자"
+        onChange={onChange4}
+        />
         </div>
         </div>
         <div style={{
@@ -258,35 +282,46 @@ const Reservation= ({history})=>{
             display:'flex',
             justifyContent:'center',
             gap:'20px'}}>     
-        <InputField placeholder="OO시"/>
-        <InputField placeholder="OO구"/>
-        <InputField placeholder="OO동"/>
-        <Btn1>
+        <InputField 
+        value={si}
+        placeholder="OO시"
+        onChange={onChange1}
+        />
+        <InputField 
+        value={gu}
+        placeholder="OO구"
+        onChange={onChange2}     
+        />
+        <InputField 
+        value={dong}
+        placeholder="OO동"
+        onChange={onChange3}
+        />
+        <Btn1 onClick={onClicked}>
             검색
         </Btn1>
         </div>
         </ContainerA>
         <ContainerB>
-            <HospitalList>
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-                여기다 스크롤 바가 있는 병원 목록
-            </HospitalList>
+            <div style={{backgroundColor:'white',
+        marginBottom:'5px'}}>
+            <div style={{
+            padding:'0px 8px',
+        }}>검색결과 총 몇건</div>
+            </div>
+            <ListWrap>
+            <HospitalList 
+            isClicked={isClick}
+            date={formatted_date}
+            vaccine={vaccine}
+            si={si}
+            gu={gu}
+            dong={dong}
+            />
             <DetailInfo>
                 안녕하세요
             </DetailInfo>
+            </ListWrap>
         </ContainerB>
     </Wrap></Body>
     );
