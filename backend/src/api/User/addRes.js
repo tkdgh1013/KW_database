@@ -23,9 +23,13 @@ export default (app, conn) =>{
 
         var sql5="UPDATE officehour set CanBeReserved=0 WHERE DateId=? and Hour=? and `reservation limit`<=0;";
 
+        var sql6="UPDATE reservationinfo SET VaccineNum = 2 WHERE RRN = (SELECT * FROM (SELECT COALESCE(MAX(?), 1) FROM reservationinfo  ) AS temp)ORDER BY DateId, Hour DESC LIMIT 1;";
 
-        conn.query(sql1+sql2+sql3+sql4+sql5,
-        [DateId,Hour,vaccine,RRN,DateId,Hour,RRN,DateId,RRN,RRN,DateId,Hour],
+        var sql7="UPDATE reservationinfo SET VaccineNum = 1 WHERE RRN = (SELECT * FROM (SELECT COALESCE(MAX(?), 1) FROM reservationinfo  ) AS temp)ORDER BY DateId, Hour LIMIT 1;";
+  
+
+        conn.query(sql1+sql2+sql3+sql4+sql5+sql6+sql7,
+        [DateId,Hour,vaccine,RRN,DateId,Hour,RRN,DateId,RRN,RRN,DateId,Hour,RRN,RRN],
         (err,results,field)=>{
             if(err){
                 res.send({results:false});
