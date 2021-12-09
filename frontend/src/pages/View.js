@@ -100,10 +100,10 @@ const option2={
     vAxis: { title: "1차 누적 접종자 수",viewWindow:{min:0}}
 }
 const firstcount=[
-    ["Date","cnt1"]
+    ["Date","당일 접종자"]
 ]
 const firstsum=[
-    ["Date","sumcnt1"]
+    ["Date","누적 접종자"]
 ]
 
 const View= ({history})=>{
@@ -138,8 +138,8 @@ const View= ({history})=>{
         </User>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <ContainerA>
-        <Chart chartType="ScatterChart" data={firstcount} options={option1} graphID="1차접종자수추이" width="100%" height="400px"></Chart>
-        <Chart chartType="ScatterChart" data={firstsum} options={option2} graphID="1차누적접종자수추이" width="100%" height="400px"></Chart>
+        <Chart chartType="LineChart" data={firstcount} options={option1} graphID="1차접종자수추이" width="100%" height="400px"></Chart>
+        <Chart chartType="LineChart" data={firstsum} options={option2} graphID="1차누적접종자수추이" width="100%" height="400px"></Chart>
         </ContainerA>
         </Wrap>
     </Body>
