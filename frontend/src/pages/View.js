@@ -92,18 +92,18 @@ const loginHandler = ({name, RRN, pn}) => {
 }
 
 const option1={
-    hAxis: { title: "날짜", format:'yyyy-MM-dd' },
-    vAxis: { title: "1차 접종자 수",viewWindow:{min:0}}
+    hAxis: { title: "날짜", format:'yyyy-MM-dd'},
+    vAxis: { title: "당일 접종자",viewWindow:{min:0}}
 }
 const option2={
     hAxis: { title: "날짜", format:'yyyy-MM-dd' },
-    vAxis: { title: "1차 누적 접종자 수",viewWindow:{min:0}}
+    vAxis: { title: "누적 접종자",viewWindow:{min:0}}
 }
-const firstcount=[
-    ["Date","당일 접종자"]
+const sum=[
+    ['Date','1차 누적 접종자','2차 누적 접종자']
 ]
-const firstsum=[
-    ["Date","누적 접종자"]
+const day=[
+    ['Date','1차 당일','2차 당일']
 ]
 
 const View= ({history})=>{
@@ -120,14 +120,14 @@ const View= ({history})=>{
         console.log(data);
         console.log(data.length);
         for(let i=0;i<data.length;i++){
-            firstcount.push([data[i].Date,data[i].cnt1]);
-            firstsum.push([data[i].Date,data[i].sumcnt1])
+            day.push([data[i].Date,data[i].cnt1,data[i].cnt2]);
+            sum.push([data[i].Date,data[i].sumcnt1,data[i].sumcnt2]);
         }
     
         });  
         },[]);
     
-    console.log(firstcount);
+    console.log(sum);
     
 
      return (
@@ -138,8 +138,8 @@ const View= ({history})=>{
         </User>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <ContainerA>
-        <Chart chartType="LineChart" data={firstcount} options={option1} graphID="1차접종자수추이" width="100%" height="400px"></Chart>
-        <Chart chartType="LineChart" data={firstsum} options={option2} graphID="1차누적접종자수추이" width="100%" height="400px"></Chart>
+        <Chart chartType="LineChart" data={day} options={option1} graphID="당일접종자수" width="300px" height="300px"></Chart>
+        <Chart chartType="LineChart" data={sum} options={option2} graphID="누적접종자수" width="300px" height="300px"></Chart>
         </ContainerA>
         </Wrap>
     </Body>
