@@ -139,12 +139,13 @@ const Name = styled.div`
     margin-left:330px;
     padding: 10px 20px;
 `
+
 const logoutHandler = () => {
     window.sessionStorage.clear();
     document.location.href = '/'
 }
 
-let resultNum;
+let resultNum=0;
 
 function HospitalList(prop){
     const result = [];
@@ -162,7 +163,9 @@ function HospitalList(prop){
     }
     axios.get("http://localhost:4000/list", {params:{date : prop.date, address1: prop.si, address2: prop.gu, address3: prop.dong, vaccine:invertedVac}}).then(({data})=>{
         console.log(data);
-        resultNum = data.length;
+        if(data.result!==false){
+            resultNum = data.length;
+        }
     })
     useEffect(()=>{
         
@@ -187,7 +190,6 @@ function HospitalList(prop){
 }
 
 
-
 const loginHandler = ({name, RRN, pn}) => {
     axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
         if(data.result===true){
@@ -197,7 +199,6 @@ const loginHandler = ({name, RRN, pn}) => {
                 alert("입력하신 이름과 주민번호, 연락처가 일치하지 않습니다.");
         }
     });
-    
 }
 
 function getFormatDate(date){
