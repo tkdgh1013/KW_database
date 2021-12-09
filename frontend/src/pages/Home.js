@@ -40,7 +40,7 @@ const TitleWrap = styled.div`
     align-items:center;
     width:400px;
     height:80px;
-    background-color:#A6A6A6;
+    background-color:#DDDDDD;
     border-radius: 10px;
     margin-top:20px;
     margin-bottom: 20px;

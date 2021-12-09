@@ -28,7 +28,7 @@ const TitleWrap = styled.div`
     align-items:center;
     width:400px;
     height:80px;
-    background-color:#A6A6A6;
+    background-color:#DDDDDD;
     border-radius: 10px;
     margin-top:70px;
     margin-bottom: 40px;
@@ -75,7 +75,7 @@ const loginHandler = ({name, RRN, pn}) => {
     
 }
 
-const Page1= ({history})=>{
+const Login= ({history})=>{
     const [name,setName] = useState("");
     const [RRN,setRRN] = useState("");
     const [pn,setPn] = useState("");
@@ -130,4 +130,4 @@ const Page1= ({history})=>{
 };
 
 
-export default Page1;
+export default Login;

@@ -28,6 +28,7 @@ const ImgWrap = styled.div`
     width:30px;
     height:30px;
     padding: 10px 20px;
+    cursor:pointer;
 `
 
 const Wrap = styled.div`
@@ -49,7 +50,7 @@ const TitleWrap = styled.div`
     align-items:center;
     width:400px;
     height:80px;
-    background-color:#bbffcc;
+    background-color:#ccd4ee;
     border-radius: 10px;
     margin-top:20px;
     margin-bottom:20px;

@@ -30,6 +30,7 @@ const ImgWrap = styled.div`
     width:30px;
     height:30px;
     padding: 10px 20px;
+    cursor:pointer;
 `
 const Wrap = styled.div`
     display:flex;
@@ -49,7 +50,7 @@ const TitleWrap = styled.div`
     align-items:center;
     width:400px;
     height:80px;
-    background-color:#FF9595;
+    background-color:#ccd4ee;
     border-radius: 10px;
     margin-top:20px;
     margin-bottom: 20px;
@@ -61,7 +62,7 @@ const ContainerA = styled.div`
     width:800px;
     gap:20px;
     height:150px;
-    background-color:#A6A6A6;
+    background-color:#DEEAF7;
     border-radius: 10px;
     margin-bottom: 20px;
 `
@@ -78,7 +79,7 @@ const Btn = styled.button`
 `
 
 const Btn1 = styled.button`
-    background-color: #308BFE;
+    background-color: #ACC7EE;
     color:white;
     text-align:center;
     width: 120px;
@@ -97,7 +98,7 @@ const ContainerB = styled.div`
     align-items:flex-start;
     flex-direction:column;
     width:800px;
-    background-color:#A6A6A6;
+    background-color:#DEEAF7;
     border-radius: 10px;
     padding: 5px 20px 20px 20px;
 `
@@ -150,6 +151,8 @@ const SubmitBtn = styled.button`
     height:50px;
     font-size:25px;
     text-align:center;
+    background-color:#ACC7EE;
+    border:0px;
 `
 
 const logoutHandler = () => {
@@ -345,7 +348,7 @@ const Reservation= ({history})=>{
         <div>
         <div style={{backgroundColor:'white',
         marginBottom:'5px',width:'300px'}}>
-        <div style={{padding:'0px 8px',}}>검색결과 : {resultNum}
+        <div style={{padding:'0px 8px',}}>검색결과 : {resultNum} 건
         </div>
         </div>
         <div style={{display:'flex'}}>
@@ -357,9 +360,11 @@ const Reservation= ({history})=>{
             {hospitalName.map((item,index)=>{
                 return <button style={{
                 height:'50px',
-                backgroundColor:'#308BFE',
-                color:'white',
+                backgroundColor:'#ACC7EE',
                 fontSize:'20px',
+                fontWeight:'bold',
+                border:'0px',
+                marginBottom:'5px'
                 }} onClick={()=>{setSelect(item);
                 setInvisible(true);}}>{item.name}</button>
             })}
@@ -373,8 +378,7 @@ const Reservation= ({history})=>{
                 return <button style={{
                 width:'50px',
                 height:'50px',
-                backgroundColor:'#308BFE',
-                color:'white',
+                backgroundColor:'#ACC7EE',
                 fontSize:'20px',
                 border:'0px',
                 cursor:'pointer'
