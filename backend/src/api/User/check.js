@@ -12,7 +12,7 @@ export default (app, conn) =>{
             }
             else{
                 
-                return res.send({result:true});
+                return res.send(result);
                         
             }
         })
