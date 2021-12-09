@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
 import {Chart} from "react-google-charts";
 import icon from"../images/goback.PNG"
 
@@ -10,8 +9,7 @@ const Body = styled.div`
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    font-size:25px;
-    height:500px;  
+    font-size:25px; 
 `
 const User=styled.div`
     display:flex;
@@ -52,10 +50,12 @@ const TitleWrap = styled.div`
 `
 const ContainerA = styled.div`
     width:600px;
-    display:inline-flex;
+    display:flex;
+    flex-direction:column;
     justify-content:center;
     gap:20px;
     align-items:center;
+    margin-top:20px;
 `
 const Btnlogout = styled.button`
     align-items:flex-end;
@@ -79,17 +79,6 @@ const logoutHandler = () => {
     window.sessionStorage.clear();
     document.location.href = '/'
 }
-const loginHandler = ({name, RRN, pn}) => {
-    axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
-        if(data.result===true){
-            document.location.href = '/page2'
-        }
-        else{
-                alert("입력하신 이름과 주민번호, 연락처가 일치하지 않습니다.");
-        }
-    });
-    
-}
 
 const option1={
     hAxis: { title: "날짜", format:'yyyy-MM-dd'},
@@ -108,7 +97,6 @@ const day=[
 
 const View= ({history})=>{
     const RRN = window.sessionStorage.getItem('RRN');
-    console.log(RRN);
     const [username, setUsername] = useState();
     useEffect(()=>{
         axios.get('http://localhost:4000/username',{params:{RRN:RRN}}).then(({data})=>{setUsername(data[0].name)});
@@ -117,19 +105,14 @@ const View= ({history})=>{
     useEffect(()=>{
         axios.get("http://localhost:4000/count", {}).then(({data})=>{
         
-        console.log(data);
-        console.log(data.length);
         for(let i=0;i<data.length;i++){
-            day.push([data[i].Date,data[i].cnt1,data[i].cnt2]);
-            sum.push([data[i].Date,data[i].sumcnt1,data[i].sumcnt2]);
+            day.push([data[i].Date,Number(data[i].cnt1),Number(data[i].cnt2)]);
+            sum.push([data[i].Date,Number(data[i].sumcnt1),Number(data[i].sumcnt2)]);
         }
     
         });  
         },[]);
     
-    console.log(sum);
-    
-
      return (
     <Body><Wrap>
         <User><ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
@@ -138,8 +121,8 @@ const View= ({history})=>{
         </User>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
         <ContainerA>
-        <Chart chartType="LineChart" data={day} options={option1} graphID="당일접종자수" width="300px" height="300px"></Chart>
-        <Chart chartType="LineChart" data={sum} options={option2} graphID="누적접종자수" width="300px" height="300px"></Chart>
+        <Chart chartType="LineChart" data={day} options={option1} graphID="당일접종자수" width="600px" height="300px"></Chart>
+        <Chart chartType="LineChart" data={sum} options={option2} graphID="누적접종자수" width="600px" height="300px"></Chart>
         </ContainerA>
         </Wrap>
     </Body>
