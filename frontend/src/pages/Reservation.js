@@ -140,10 +140,8 @@ const logoutHandler = () => {
     document.location.href = '/'
 }
 
-function HospitalList(prop){
+/*function HospitalList(prop){
     const result = [];
-   // const [hospitalName, setHospitalName] = useState();
-    const [resultNum,setResultNum] = useState(0);
     let invertedVac;
     console.log(prop);
     if(prop.vaccine==="화이자"){
@@ -157,17 +155,18 @@ function HospitalList(prop){
     }
     axios.get("http://localhost:4000/list", {params:{date : prop.date, address1: prop.si, address2: prop.gu, address3: prop.dong, vaccine:invertedVac}}).then(({data})=>{
         console.log(data);
-        for (let i=0; i<data.length; i++){
-            result.push(<div>for문 체크 {i}</div>)
-        }
         if(data.result!==false){
             setResultNum(data.length);
-            
+            for (let i=0; i<data.length; i++){
+                result.push(<div>왜안되는데 {data[i].name}</div>)
+            }
+
         }
         else{
             setResultNum(0);
         }
-    })
+    });
+    console.log(result);
     if(prop.isClicked===false)
     {
         return <div style={{backgroundColor:'white',
@@ -195,27 +194,24 @@ function HospitalList(prop){
             height:'600px',
             width:'300px',
             flexDirection:'column',
-            overflow:'scroll'
-            }}>{result}</div>
+            overflow:'scroll'}}>
+                {result}
+            </div>
             <DetailInfo>
-                  안녕하세요
+                왜안되냐고
             </DetailInfo>
             </div>
         </div>
     );
-}
+}*/
 
+const DesinedButton = styled.button`
+    background: white;
+    height: 50px;
+    width: 100%;
+    margin:10px;
+`
 
-const loginHandler = ({name, RRN, pn}) => {
-    axios.get("http://localhost:4000/login", {params:{userName : name, RRN: RRN, phoneNumber:pn}}).then(({data})=>{
-        if(data.result===true){
-            document.location.href = '/page2'
-        }
-        else{
-                alert("입력하신 이름과 주민번호, 연락처가 일치하지 않습니다.");
-        }
-    });
-}
 
 function getFormatDate(date){
     var year = date.getFullYear();
@@ -233,7 +229,16 @@ const Reservation= ({history})=>{
     const [gu,setGu] = useState("");
     const [dong,setDong] = useState("");
     const [vaccine,setVaccine] = useState();
-    const [isClick,setIsClick] = useState(false);
+    const [resultNum,setResultNum] = useState(0);
+    const [sibal,setSibal] = useState([]);
+    const [select, setSelect] = useState();
+    const [selectInfo, setSelectInfo] = useState();
+    
+    useEffect(()=>{
+        console.log(select);
+        if(select !== undefined)
+            axios.get('http://localhost:4000/hinfo',{params:{name:select.name, DateId:select.DateId}}).then(({data})=>{console.log(data); setSelectInfo(data)});
+    },[select])
     
     const ExampleCustomInput = ({ value, onClick }) => (
         <Btn onClick={onClick}>
@@ -253,30 +258,44 @@ const Reservation= ({history})=>{
     },[])
 
     const onChange1 = (event) => {
-        setIsClick(false);
         setSi(event.target.value);
     }
     const onChange2 = (event) => {
-        setIsClick(false);
         setGu(event.target.value);
     }
     const onChange3 = (event) => {
-        setIsClick(false);
         setDong(event.target.value);
     }
     const onChange4 = (event) => {
-        setIsClick(false);
         setVaccine(event.target.value);
     }
-    const onClicked = ()=>{
-        if(si[(si.length)-1]!=='시'||gu[(si.length)-1]!=='구'||dong[(dong.length)-1]!=='동'||(!(vaccine==='화이자'||vaccine==='모더나'||vaccine==='아스트라제네카'||vaccine==='얀센')))
+    const onClicked = ({date, si, gu, dong, vaccine, setResultNum, setSibal})=>{
+        console.log(date, si, gu, dong, vaccine, setResultNum)
+        if(si[(si.length)-1]!=='시'||gu[(gu.length)-1]!=='구'||dong[(dong.length)-1]!=='동'||(!(vaccine==='화이자'||vaccine==='모더나'||vaccine==='아스트라제네카'||vaccine==='얀센')))
         {
             alert("검색 옵션을 알맞게 입력해주십시오.");
             return;
         }
-        setIsClick(true);
+        let invertedVac;
+        
+        if(vaccine==="화이자"){
+            invertedVac = "Pfizer";
+        } else if(vaccine==="모더나"){
+            invertedVac = "Moderna";
+        } else if(vaccine==="아스트라제네카"){
+            invertedVac = "AstraZeneca";
+        } else if(vaccine==="얀센"){
+            invertedVac = "Janssen";
+        }
+        axios.get("http://localhost:4000/list", {params:{date : date, address1: si, address2: gu, address3: dong, vaccine:invertedVac}}).then(({data})=>{
+            console.log(data);
+            if(data!==undefined){
+                setResultNum(data.length);
+                setSibal(data);
+            }
+        });
     }
-    console.log(vaccine);
+
     return (
     <Body><Wrap>
         <User><ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
@@ -331,20 +350,38 @@ const Reservation= ({history})=>{
         placeholder="OO동"
         onChange={onChange3}
         />
-        <Btn1 onClick={onClicked}>
+        <Btn1 onClick={()=>onClicked({date:formatted_date, si, gu, dong, vaccine, setResultNum, setSibal})}>
             검색
         </Btn1>
         </div>
         </ContainerA>
         <ContainerB>
-            <HospitalList 
-            isClicked={isClick}
-            date={formatted_date}
-            vaccine={vaccine}
-            si={si}
-            gu={gu}
-            dong={dong}
-            />
+        <div>
+        <div style={{backgroundColor:'white',
+        marginBottom:'5px',width:'300px'}}>
+        <div style={{padding:'0px 8px',}}>검색결과 : {resultNum}
+        </div>
+        </div>
+        <div style={{display:'flex'}}>
+            <div style={{display:'flex',
+            height:'600px',
+            width:'300px',
+            flexDirection:'column',
+            overflow:'scroll'}}>
+            {sibal.map((item,index)=>{
+                return <button style={{
+                height:'50px',
+                backgroundColor:'#308BFE',
+                color:'white',
+                fontSize:'20px'}} onClick={()=>{setSelect(item)}}>{item.name}</button>
+            })}
+        </div>
+        <DetailInfo>
+            왜안되냐고
+        </DetailInfo>
+        </div>
+        </div>
+            <DesinedButton>test button</DesinedButton>
         </ContainerB>
     </Wrap></Body>
     );
