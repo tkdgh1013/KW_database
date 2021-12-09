@@ -102,11 +102,6 @@ const ContainerB = styled.div`
     padding: 5px 20px 20px 20px;
 `
 
-const ListWrap = styled.div`
-    display:flex;
-    align-items:center;
-`
-
 const DetailInfo = styled.div`
     display:flex;
     flex-direction:column;
@@ -145,11 +140,10 @@ const logoutHandler = () => {
     document.location.href = '/'
 }
 
-let resultNum=0;
-
 function HospitalList(prop){
     const result = [];
-    const [hospitalName, setHospitalName] = useState();
+   // const [hospitalName, setHospitalName] = useState();
+    const [resultNum,setResultNum] = useState(0);
     let invertedVac;
     console.log(prop);
     if(prop.vaccine==="화이자"){
@@ -163,28 +157,50 @@ function HospitalList(prop){
     }
     axios.get("http://localhost:4000/list", {params:{date : prop.date, address1: prop.si, address2: prop.gu, address3: prop.dong, vaccine:invertedVac}}).then(({data})=>{
         console.log(data);
+        for (let i=0; i<data.length; i++){
+            result.push(<div>for문 체크 {i}</div>)
+        }
         if(data.result!==false){
-            resultNum = data.length;
+            setResultNum(data.length);
+            
+        }
+        else{
+            setResultNum(0);
         }
     })
-    useEffect(()=>{
-        
-    },[])
     if(prop.isClicked===false)
     {
-        return <div>없어</div>;
+        return <div style={{backgroundColor:'white',
+        marginBottom:'5px',
+        width:'300px'}}>
+         <div style={{
+          padding:'0px 8px',
+       }}>검색결과 총 0건</div>
+      </div>;
     }
-    for (let i=0; i<5; i++){
+    for (let i=0; i<resultNum; i++){
         result.push(<div>for문 체크 {i}</div>)
     }
     return(
-        <div style={{display:'flex',
-        height:'600px',
-        width:'300px',
-        flexDirection:'column',
-        overflow:'scroll'
-        }}>
-        {result}
+        <div>
+            <div style={{backgroundColor:'white',
+              marginBottom:'5px',
+              width:'300px'}}>
+               <div style={{
+                padding:'0px 8px',
+             }}>검색결과 총 {resultNum}건</div>
+            </div>
+            <div style={{display:'flex'}}>
+            <div style={{display:'flex',
+            height:'600px',
+            width:'300px',
+            flexDirection:'column',
+            overflow:'scroll'
+            }}>{result}</div>
+            <DetailInfo>
+                  안녕하세요
+            </DetailInfo>
+            </div>
         </div>
     );
 }
@@ -237,15 +253,19 @@ const Reservation= ({history})=>{
     },[])
 
     const onChange1 = (event) => {
+        setIsClick(false);
         setSi(event.target.value);
     }
     const onChange2 = (event) => {
+        setIsClick(false);
         setGu(event.target.value);
     }
     const onChange3 = (event) => {
+        setIsClick(false);
         setDong(event.target.value);
     }
     const onChange4 = (event) => {
+        setIsClick(false);
         setVaccine(event.target.value);
     }
     const onClicked = ()=>{
@@ -317,13 +337,6 @@ const Reservation= ({history})=>{
         </div>
         </ContainerA>
         <ContainerB>
-            <div style={{backgroundColor:'white',
-        marginBottom:'5px'}}>
-            <div style={{
-            padding:'0px 8px',
-        }}>검색결과 총 {resultNum}건</div>
-            </div>
-            <ListWrap>
             <HospitalList 
             isClicked={isClick}
             date={formatted_date}
@@ -332,10 +345,6 @@ const Reservation= ({history})=>{
             gu={gu}
             dong={dong}
             />
-            <DetailInfo>
-                안녕하세요
-            </DetailInfo>
-            </ListWrap>
         </ContainerB>
     </Wrap></Body>
     );
