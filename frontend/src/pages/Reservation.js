@@ -242,7 +242,17 @@ const Reservation= ({history})=>{
         });
     }
 
-    const Submit = ({dateId, hour, RRN, vaccine})=>{
+    const  Submit = async({dateId, hour, RRN, vaccine})=>{
+        let exit = false;
+        await axios.get("http://localhost:4000/check", {params:{RRN: RRN}}).then(({data})=>{   
+            for(let i=0; i<data.length; i++)
+            {
+                if(getFormatDate(date)===data[i].Date){
+                    alert("해당 날짜에 예약 정보가 이미 존재합니다.");
+                    exit = true;                        
+                }
+            }
+        });
         let invertedVac;
         if(vaccine==="화이자"){
             invertedVac = "Pfizer";
@@ -252,6 +262,9 @@ const Reservation= ({history})=>{
             invertedVac = "AstraZeneca";
         } else if(vaccine==="얀센"){
             invertedVac = "Janssen";
+        }
+        if(exit===true){
+            return;
         }
         if(window.confirm(hour+"시 예약 하시겠습니까?")){
                 axios.get("http://localhost:4000/addRes", {params:{DateId : dateId, Hour: hour, RRN: RRN, vaccine:invertedVac}}).then(({data})=>{
@@ -287,15 +300,7 @@ const Reservation= ({history})=>{
         <DatePicker
         selected={date}
         onChange={date => {
-            axios.get("http://localhost:4000/check", {params:{DateId : dateId, Hour: hour, RRN: RRN, vaccine:invertedVac}}).then(({data})=>{
-            console.log(data);
-            if(getFormatDate(date)==='2021-11-01'){
-
-            }
-            else{
-            setDate(date);
-            }
-            });            
+            setDate(date);           
         }}
         customInput={<ExampleCustomInput />}
         />
@@ -378,7 +383,8 @@ const Reservation= ({history})=>{
             </FlexColumn>
             <div>연락처<br></br>{selectInfo[0].contact}</div>
             <div>접종 예약 가능 시간<br></br>{selectInfo[0].Hour}시 ~ {selectInfo[selectInfo.length-1].Hour}시</div>
-            <SubmitBtn onClick={()=>Submit({dateId:select.DateId, hour:selectedHour, RRN:RRN, vaccine:vaccine})} >{selectedHour}시 예약</SubmitBtn>
+            {selectedHour==="" ? <div></div> :
+            <SubmitBtn onClick={()=>Submit({dateId:select.DateId, hour:selectedHour, RRN:RRN, vaccine:vaccine})} >{selectedHour}{(selectedHour==="")?"":"시 예약"}</SubmitBtn>}
         </DetailInfo>
         }
         </div>
