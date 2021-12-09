@@ -259,6 +259,7 @@ const Reservation= ({history})=>{
                 console.log(data);
                 if(data.result===true){
                     alert("예약이 완료되었습니다.");
+                    document.location.href = "/home";
                 }
                 else{
                     alert("예약에 실패했습니다. 다시 시도해주십시오.");
