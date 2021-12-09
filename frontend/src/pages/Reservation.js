@@ -144,12 +144,25 @@ const logoutHandler = () => {
     document.location.href = '/'
 }
 
+let resultNum;
+
 function HospitalList(prop){
     const result = [];
     const [hospitalName, setHospitalName] = useState();
+    let invertedVac;
     console.log(prop);
-    axios.get("http://localhost:4000/list", {params:{date : prop.date, address1: prop.si, address2: prop.gu, address3: prop.dong, vaccine:prop.vaccine}}).then(({data})=>{
+    if(prop.vaccine==="화이자"){
+        invertedVac = "Pfizer";
+    } else if(prop.vaccine==="모더나"){
+        invertedVac = "Moderna";
+    } else if(prop.vaccine==="아스트라제네카"){
+        invertedVac = "AstraZeneca";
+    } else if(prop.vaccine==="얀센"){
+        invertedVac = "Janssen";
+    }
+    axios.get("http://localhost:4000/list", {params:{date : prop.date, address1: prop.si, address2: prop.gu, address3: prop.dong, vaccine:invertedVac}}).then(({data})=>{
         console.log(data);
+        resultNum = data.length;
     })
     useEffect(()=>{
         
@@ -235,7 +248,7 @@ const Reservation= ({history})=>{
         setVaccine(event.target.value);
     }
     const onClicked = ()=>{
-        if(si[(si.length)-1]!=='시'||gu[(si.length)-1]!=='구'||dong[(dong.length)-1]!=='동'&&(vaccine==='화이자'||vaccine==='모더나'||vaccine==='아스트라제네카'||vaccine==='얀센'))
+        if(si[(si.length)-1]!=='시'||gu[(si.length)-1]!=='구'||dong[(dong.length)-1]!=='동'||(!(vaccine==='화이자'||vaccine==='모더나'||vaccine==='아스트라제네카'||vaccine==='얀센')))
         {
             alert("검색 옵션을 알맞게 입력해주십시오.");
             return;
@@ -307,7 +320,7 @@ const Reservation= ({history})=>{
         marginBottom:'5px'}}>
             <div style={{
             padding:'0px 8px',
-        }}>검색결과 총 몇건</div>
+        }}>검색결과 총 {resultNum}건</div>
             </div>
             <ListWrap>
             <HospitalList 
