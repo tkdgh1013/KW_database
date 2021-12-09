@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
+import {Chart} from "react-google-charts";
 import icon from"../images/goback.PNG"
 
 const Body = styled.div`
@@ -49,34 +50,12 @@ const TitleWrap = styled.div`
     background-color:#A6A6A6;
     border-radius: 10px;
 `
-
-const LeftInput = styled.span`
-    width:100px;
-    height:50px;
-    margin-right:20px;
-    text-align:center;
-`
-
-const RightInput = styled.span`
-    width:100px;
-    height:50px;
-    margin-right:20px;
-    text-align:center;
-`
-
-const innerBody = styled.div`
-    margin:10px;
-`
-
-const Btn = styled.button`
-    background-color: skyblue;
-    color : white;
-    padding: 10px 20px;
-    border: 0;
-    border-radius: 10px;
-    font-size: 16;
-    margin-left: 40px;
-    cursor: pointer;
+const ContainerA = styled.div`
+    width:600px;
+    display:inline-flex;
+    justify-content:center;
+    gap:20px;
+    align-items:center;
 `
 const Btnlogout = styled.button`
     align-items:flex-end;
@@ -112,6 +91,21 @@ const loginHandler = ({name, RRN, pn}) => {
     
 }
 
+const option1={
+    hAxis: { title: "날짜", format:'yyyy-MM-dd' },
+    vAxis: { title: "1차 접종자 수",viewWindow:{min:0}}
+}
+const option2={
+    hAxis: { title: "날짜", format:'yyyy-MM-dd' },
+    vAxis: { title: "1차 누적 접종자 수",viewWindow:{min:0}}
+}
+const firstcount=[
+    ["Date","cnt1"]
+]
+const firstsum=[
+    ["Date","sumcnt1"]
+]
+
 const View= ({history})=>{
     const RRN = window.sessionStorage.getItem('RRN');
     console.log(RRN);
@@ -124,9 +118,17 @@ const View= ({history})=>{
         axios.get("http://localhost:4000/count", {}).then(({data})=>{
         
         console.log(data);
+        console.log(data.length);
+        for(let i=0;i<data.length;i++){
+            firstcount.push([data[i].Date,data[i].cnt1]);
+            firstsum.push([data[i].Date,data[i].sumcnt1])
+        }
     
         });  
         },[]);
+    
+    console.log(firstcount);
+    
 
      return (
     <Body><Wrap>
@@ -135,11 +137,10 @@ const View= ({history})=>{
         <Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout>
         </User>
         <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
-        <div
-            style={{marginBottom:"60px"}}>
-               
-        
-        </div>
+        <ContainerA>
+        <Chart chartType="ScatterChart" data={firstcount} options={option1} graphID="1차접종자수추이" width="100%" height="400px"></Chart>
+        <Chart chartType="ScatterChart" data={firstsum} options={option2} graphID="1차누적접종자수추이" width="100%" height="400px"></Chart>
+        </ContainerA>
         </Wrap>
     </Body>
     );
