@@ -102,13 +102,7 @@ const ContainerB = styled.div`
     padding: 5px 20px 20px 20px;
 `
 
-const DetailInfo = styled.div`
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    width:500px;
-`
+
 
 const InputField = styled.input`
     width:100px;
@@ -134,84 +128,34 @@ const Name = styled.div`
     margin-left:330px;
     padding: 10px 20px;
 `
+const DetailInfo = styled.div`
+    padding:10px;
+    margin-left:5px;
+    background-color: white;
+    display:flex;
+    flex-direction:column;
+    width:480px;
+    gap:20px;
+    font-size:20px;
+`
+
+const FlexColumn = styled.div`
+    overflow: visible;
+    display:flex;
+    gap:10px;
+`
+
+const SubmitBtn = styled.button`
+    width:150px;
+    height:50px;
+    font-size:25px;
+    text-align:center;
+`
 
 const logoutHandler = () => {
     window.sessionStorage.clear();
     document.location.href = '/'
 }
-
-/*function HospitalList(prop){
-    const result = [];
-    let invertedVac;
-    console.log(prop);
-    if(prop.vaccine==="화이자"){
-        invertedVac = "Pfizer";
-    } else if(prop.vaccine==="모더나"){
-        invertedVac = "Moderna";
-    } else if(prop.vaccine==="아스트라제네카"){
-        invertedVac = "AstraZeneca";
-    } else if(prop.vaccine==="얀센"){
-        invertedVac = "Janssen";
-    }
-    axios.get("http://localhost:4000/list", {params:{date : prop.date, address1: prop.si, address2: prop.gu, address3: prop.dong, vaccine:invertedVac}}).then(({data})=>{
-        console.log(data);
-        if(data.result!==false){
-            setResultNum(data.length);
-            for (let i=0; i<data.length; i++){
-                result.push(<div>왜안되는데 {data[i].name}</div>)
-            }
-
-        }
-        else{
-            setResultNum(0);
-        }
-    });
-    console.log(result);
-    if(prop.isClicked===false)
-    {
-        return <div style={{backgroundColor:'white',
-        marginBottom:'5px',
-        width:'300px'}}>
-         <div style={{
-          padding:'0px 8px',
-       }}>검색결과 총 0건</div>
-      </div>;
-    }
-    for (let i=0; i<resultNum; i++){
-        result.push(<div>for문 체크 {i}</div>)
-    }
-    return(
-        <div>
-            <div style={{backgroundColor:'white',
-              marginBottom:'5px',
-              width:'300px'}}>
-               <div style={{
-                padding:'0px 8px',
-             }}>검색결과 총 {resultNum}건</div>
-            </div>
-            <div style={{display:'flex'}}>
-            <div style={{display:'flex',
-            height:'600px',
-            width:'300px',
-            flexDirection:'column',
-            overflow:'scroll'}}>
-                {result}
-            </div>
-            <DetailInfo>
-                왜안되냐고
-            </DetailInfo>
-            </div>
-        </div>
-    );
-}*/
-
-const DesinedButton = styled.button`
-    background: white;
-    height: 50px;
-    width: 100%;
-    margin:10px;
-`
-
 
 function getFormatDate(date){
     var year = date.getFullYear();
@@ -230,12 +174,14 @@ const Reservation= ({history})=>{
     const [dong,setDong] = useState("");
     const [vaccine,setVaccine] = useState();
     const [resultNum,setResultNum] = useState(0);
-    const [sibal,setSibal] = useState([]);
+    const [hospitalName,setHospitalName] = useState([]);
     const [select, setSelect] = useState();
-    const [selectInfo, setSelectInfo] = useState();
+    const [selectInfo, setSelectInfo] = useState([0]);
+    const [invisible, setInvisible] = useState(false);
+    const [selectedHour, setSH] = useState("");
     
+    console.log(invisible);
     useEffect(()=>{
-        console.log(select);
         if(select !== undefined)
             axios.get('http://localhost:4000/hinfo',{params:{name:select.name, DateId:select.DateId}}).then(({data})=>{console.log(data); setSelectInfo(data)});
     },[select])
@@ -269,7 +215,7 @@ const Reservation= ({history})=>{
     const onChange4 = (event) => {
         setVaccine(event.target.value);
     }
-    const onClicked = ({date, si, gu, dong, vaccine, setResultNum, setSibal})=>{
+    const onClicked = ({date, si, gu, dong, vaccine, setResultNum, setHospitalName})=>{
         console.log(date, si, gu, dong, vaccine, setResultNum)
         if(si[(si.length)-1]!=='시'||gu[(gu.length)-1]!=='구'||dong[(dong.length)-1]!=='동'||(!(vaccine==='화이자'||vaccine==='모더나'||vaccine==='아스트라제네카'||vaccine==='얀센')))
         {
@@ -291,9 +237,38 @@ const Reservation= ({history})=>{
             console.log(data);
             if(data!==undefined){
                 setResultNum(data.length);
-                setSibal(data);
+                setHospitalName(data);
             }
         });
+    }
+
+    const Submit = ({dateId, hour, RRN, vaccine})=>{
+        let invertedVac;
+        
+        if(vaccine==="화이자"){
+            invertedVac = "Pfizer";
+        } else if(vaccine==="모더나"){
+            invertedVac = "Moderna";
+        } else if(vaccine==="아스트라제네카"){
+            invertedVac = "AstraZeneca";
+        } else if(vaccine==="얀센"){
+            invertedVac = "Janssen";
+        }
+        if(window.confirm(hour+"시 예약 하시겠습니까?")){
+                axios.get("http://localhost:4000/addRes", {params:{DateId : dateId, Hour: hour, RRN: RRN, vaccine:invertedVac}}).then(({data})=>{
+                console.log(data);
+                if(data.result===true){
+                    alert("예약이 완료되었습니다.");
+                    document.location.href = "/home";
+                }
+                else{
+                    alert("예약에 실패했습니다. 다시 시도해주십시오.");
+                }
+            });
+        }
+        else{
+            return;
+        }
     }
 
     return (
@@ -350,7 +325,7 @@ const Reservation= ({history})=>{
         placeholder="OO동"
         onChange={onChange3}
         />
-        <Btn1 onClick={()=>onClicked({date:formatted_date, si, gu, dong, vaccine, setResultNum, setSibal})}>
+        <Btn1 onClick={()=>onClicked({date:formatted_date, si, gu, dong, vaccine, setResultNum, setHospitalName})}>
             검색
         </Btn1>
         </div>
@@ -368,20 +343,40 @@ const Reservation= ({history})=>{
             width:'300px',
             flexDirection:'column',
             overflow:'scroll'}}>
-            {sibal.map((item,index)=>{
+            {hospitalName.map((item,index)=>{
                 return <button style={{
                 height:'50px',
                 backgroundColor:'#308BFE',
                 color:'white',
-                fontSize:'20px'}} onClick={()=>{setSelect(item)}}>{item.name}</button>
+                fontSize:'20px',
+                }} onClick={()=>{setSelect(item);
+                setInvisible(true);}}>{item.name}</button>
             })}
         </div>
+        {invisible===false ? <div></div> :
         <DetailInfo>
-            왜안되냐고
+            <div style={{fontSize:'30px'}}>{selectInfo[0].name}</div>
+            <div>상세주소<br></br>{selectInfo[0].address1}<br></br>{selectInfo[0].address2}</div>
+            <FlexColumn>
+            {selectInfo.map((item,index)=>{
+                return <button style={{
+                width:'50px',
+                height:'50px',
+                backgroundColor:'#308BFE',
+                color:'white',
+                fontSize:'20px',
+                border:'0px',
+                cursor:'pointer'
+            }} onClick={()=>setSH(item.Hour+"시 예약")}>{item.Hour}</button>
+            })}
+            </FlexColumn>
+            <div>연락처<br></br>{selectInfo[0].contact}</div>
+            <div>접종 예약 가능 시간<br></br>{selectInfo[0].Hour}시 ~ {selectInfo[selectInfo.length-1].Hour}시</div>
+            <SubmitBtn onClick={()=>Submit({dateId:select.DateId, hour:selectedHour, RRN:RRN, vaccine:vaccine})} >{selectedHour}</SubmitBtn>
         </DetailInfo>
+        }
         </div>
         </div>
-            <DesinedButton>test button</DesinedButton>
         </ContainerB>
     </Wrap></Body>
     );
