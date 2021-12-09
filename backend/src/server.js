@@ -11,6 +11,7 @@ import Hsearch from './api/User/hospital/Hsearch.js';
 import count from './api/User/count.js';
 import addRes from './api/User/addRes.js';
 import subRes from './api/User/subRes.js';
+import check from './api/User/check.js';
 
 const conn = init();
 
@@ -38,6 +39,7 @@ Hsearch(app,conn);
 count(app,conn);
 addRes(app,conn);
 subRes(app,conn);
+check(app,conn);
 app.set('port', process.env.PORT || 4000);
 
 app.listen(app.get('port'), () => {
