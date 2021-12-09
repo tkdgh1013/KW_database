@@ -45,7 +45,7 @@ const TitleWrap = styled.div`
     align-items:center;
     width:400px;
     height:80px;
-    background-color:#A6A6A6;
+    background-color:#ccd4ee;
     border-radius: 10px;
 `
 const ContainerA = styled.div`
@@ -119,7 +119,7 @@ const View= ({history})=>{
         <Name>{username}님</Name>
         <Btnlogout onClick={()=>logoutHandler()}>로그아웃</Btnlogout>
         </User>
-        <TitleWrap><Title>백신 접종 예약 시스템</Title> </TitleWrap>
+        <TitleWrap><Title>날짜별 접종 추이 그래프</Title> </TitleWrap>
         <ContainerA>
         <Chart chartType="LineChart" data={day} options={option1} graphID="당일접종자수" width="600px" height="300px"></Chart>
         <Chart chartType="LineChart" data={sum} options={option2} graphID="누적접종자수" width="600px" height="300px"></Chart>
