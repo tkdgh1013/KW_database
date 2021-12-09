@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components'
 import {Chart} from "react-google-charts";
 import icon from"../images/goback.PNG"
+import "@fontsource/noto-sans-kr";
 
 const Body = styled.div`
     display:flex;
@@ -10,6 +11,8 @@ const Body = styled.div`
     align-items:center;
     flex-direction:column;
     font-size:25px; 
+    font-family:"Noto Sans KR";
+
 `
 const User=styled.div`
     display:flex;
