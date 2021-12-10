@@ -121,30 +121,19 @@ function MyReservation(props){
     }
     var splitString = props.string.split('|');
     const RRN = props.RRN;
-    if(splitString[6]==='Pfizer'){
-        splitString[6]='화이자';
-    }
-    else if(splitString[6]==='Moderna'){
-        splitString[6]='모더나';
-    }
-    else if(splitString[6]==='AstraZeneca'){
-        splitString[6]='아스트라제네카';
-    }
-    else {
-        splitString[6]='얀센';
-    }
-
-    if(splitString[15]==='Pfizer'){
-        splitString[15]='화이자';
-    }
-    else if(splitString[15]==='Moderna'){
-        splitString[15]='모더나';
-    }
-    else if(splitString[15]==='AstraZeneca'){
-        splitString[15]='아스트라제네카';
-    }
-    else if(splitString[15==='Janssen']) {
-        splitString[15]='얀센';
+    function convertVac(string){
+        if(string==='Pfizer'){
+            return '화이자';
+        }
+        else if(string==='Moderna'){
+            return '모더나';
+        }
+        else if(string==='AstraZeneca'){
+            return '아스트라제네카';
+        }
+        else {
+            return '얀센';
+        }
     }
 
     if(isExist===0){
@@ -178,7 +167,7 @@ function MyReservation(props){
             <span>연락처 : {splitString[1]}</span>
             </div>
             <div>
-            <span>백신 : {splitString[6]}</span>
+            <span>백신 : {convertVac(splitString[6])}</span>
             </div>
             </div>
         </Box>
@@ -216,7 +205,7 @@ function MyReservation(props){
                 <span>연락처 : {splitString[1]}</span>
                 </div>
                 <div>
-                <span>백신 : {splitString[6]}</span>
+                <span>백신 : {convertVac(splitString[6])}</span>
                 </div>
                 </div>
             </Box>
@@ -249,7 +238,7 @@ function MyReservation(props){
                 <span>연락처 : {splitString[10]}</span>
                 </div>
                 <div>
-                <span>백신 : {splitString[15]}</span>
+                <span>백신 : {convertVac(splitString[15])}</span>
                 </div>
                 </div>
             </Box>
