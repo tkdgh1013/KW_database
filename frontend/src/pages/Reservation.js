@@ -154,6 +154,9 @@ const SubmitBtn = styled.button`
     background-color:#ACC7EE;
     border:0px;
 `
+const FlexBox = styled.div`
+    display:flex;
+`
 
 const logoutHandler = () => {
     window.sessionStorage.clear();
@@ -197,7 +200,12 @@ const Reservation= ({history})=>{
 
     useEffect(()=>{
         setFdate(getFormatDate(date));
-    },[date]);    
+    },[date]); 
+    
+    useEffect(()=>{
+        if(resultNum==undefined)
+            setResultNum(0);
+    },[resultNum]); 
 
     const RRN = window.sessionStorage.getItem('RRN');
 
@@ -285,7 +293,8 @@ const Reservation= ({history})=>{
             return;
         }
     }
-
+    console.log(hospitalName);
+    console.log(resultNum);
     return (
     <Body><Wrap>
         <User><ImgWrap><img src={icon} onClick = {()=>{document.location.href = '/home'}}></img></ImgWrap>
@@ -351,7 +360,10 @@ const Reservation= ({history})=>{
         <div style={{padding:'0px 8px',}}>검색결과 : {resultNum} 건
         </div>
         </div>
+        
         <div style={{display:'flex'}}>
+            
+            {hospitalName.result===false ? <div></div> :
             <div style={{display:'flex',
             height:'600px',
             width:'300px',
@@ -368,7 +380,9 @@ const Reservation= ({history})=>{
                 }} onClick={()=>{setSelect(item);
                 setInvisible(true);}}>{item.name}</button>
             })}
-        </div>
+            </div>
+            }
+
         {invisible===false ? <div></div> :
         <DetailInfo>
             <div style={{fontSize:'30px'}}>{selectInfo[0].name}</div>
