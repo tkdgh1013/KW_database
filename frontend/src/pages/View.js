@@ -110,18 +110,18 @@ const View= ({history})=>{
     useEffect(()=>{
         axios.get("http://localhost:4000/count", {}).then(({data})=>{
         console.log(data);
-        let temp, temp2;        
+        let temp, temp2;
+        let cntsum2=0;        
         for(let i=0;i<data.length;i++){
             if(data[i].cnt2===undefined)
                 temp=0;
             else
+            {
                 temp = data[i].cnt2;
-            if(data[i].sumcnt2===undefined)
-                temp2=0;
-            else
-                temp2 = data[i].sumcnt2;
+                cntsum2 = cntsum2 + temp;
+            }
             day.push([data[i].Date,Number(data[i].cnt1-temp),Number(data[i].cnt2)]);
-            sum.push([data[i].Date,Number(data[i].sumcnt1-temp2),Number(data[i].sumcnt2)]);
+            sum.push([data[i].Date,Number(data[i].sumcnt1-cntsum2),Number(cntsum2)]);
         }
     
         });  
